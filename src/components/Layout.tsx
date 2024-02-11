@@ -7,7 +7,7 @@ export const Layout = ({ children, ...rest }: BoxProps) => {
    const { settingsStore } = useStore();
 
    return (
-      <Root {...rest} flatColor={settingsStore.color}>
+      <Root {...rest} flatColor={settingsStore.currentColor}>
          <StyledContainer maxWidth="md">
             <Header />
             <HeaderDivider />
@@ -21,10 +21,13 @@ interface StyleProps {
    flatColor: Color;
 }
 
-const Root = styled(Box)<StyleProps>(({ flatColor, theme }) => ({
+const Root = styled(Box, {
+   shouldForwardProp: (prop) => prop !== 'flatColor',
+})<StyleProps>(({ flatColor, theme }) => ({
    width: '100%',
    background: theme.palette.flat[flatColor],
    padding: theme.spacing(2),
+   transition: 'background 0.6s',
 }));
 
 const StyledContainer = styled(Container)(({ theme }) =>

@@ -1,3 +1,4 @@
+import { tabClasses, tabsClasses } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 
 export const theme = createTheme({
@@ -84,7 +85,7 @@ export const theme = createTheme({
          styleOverrides: {
             root: ({ theme }) =>
                theme.unstable_sx({
-                  backgroundColor: theme.palette.background.paper,
+                  backgroundColor: '#FFFFFF1A',
                   backgroundImage: 'none',
                   width: '100%',
                   display: 'flex',
@@ -92,9 +93,7 @@ export const theme = createTheme({
                   boxShadow: theme.palette.shadows.xs,
                   borderRadius: 1.5,
                   p: theme.spacing(4),
-                  border: `1px solid ${theme.palette.separator}`,
-                  borderLeftWidth: 1,
-                  borderRightWidth: 1,
+                  border: 'none',
                   transition:
                      'background-color 0.3s, border-color 0.3s, box-shadow 0.3s, margin 0.15s',
                }),
@@ -142,6 +141,41 @@ export const theme = createTheme({
             outlined: ({ theme }) => ({
                border: `1px solid ${theme.palette.paper.border}`,
                background: theme.palette.paper.transparent,
+            }),
+         },
+      },
+      MuiTab: {
+         styleOverrides: {
+            root: ({ theme }) => ({
+               padding: theme.spacing(0.75, 1.25),
+               textTransform: 'none',
+               letterSpacing: -0.25,
+               color: `${theme.palette.text.primary}AA`,
+               transition: 'all 0.15s',
+               borderRadius: 4,
+               minHeight: 0,
+               fontSize: '1rem',
+               fontWeight: 'bold',
+               ':hover': {
+                  background: '#FFFFFF0A',
+               },
+               [`&.${tabClasses.selected}`]: {
+                  color: theme.palette.primary.main,
+                  backgroundColor: '#FFFFFF1A',
+                  borderBottom: 'none',
+               },
+            }),
+         },
+      },
+      MuiTabs: {
+         styleOverrides: {
+            root: () => ({
+               [`& .${tabsClasses.flexContainer}`]: {
+                  justifyContent: 'space-evenly !important',
+               },
+               [`& .${tabsClasses.indicator}`]: {
+                  display: 'none',
+               },
             }),
          },
       },
