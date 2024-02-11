@@ -15,6 +15,15 @@ interface CustomPalette {
       sm: string;
       md: string;
    };
+   flat: {
+      red: string;
+      cyan: string;
+      blue: string;
+      yellow: string;
+      purple: string;
+      green: string;
+      gray: string;
+   };
    separator: string;
 }
 

@@ -3,8 +3,7 @@ import { createTheme } from '@mui/material/styles';
 export const theme = createTheme({
    palette: {
       primary: {
-         main: '#236348',
-         dark: '#173915',
+         main: '#fafafa',
       },
       secondary: {
          main: '#333333',
@@ -13,8 +12,8 @@ export const theme = createTheme({
          main: '#EF4444',
       },
       text: {
-         primary: '#464646',
-         secondary: '#717171',
+         primary: '#fafafa',
+         secondary: '#fafafa',
       },
       link: {
          normal: '#6f7589',
@@ -31,8 +30,17 @@ export const theme = createTheme({
          md: '0 1px 2px 0 rgba(31, 51, 86, 0.24)',
       },
       background: {
-         default: '#F8FCF4',
+         default: '#FFFFFF',
          paper: '#FFFFFF',
+      },
+      flat: {
+         red: '#ba4949',
+         cyan: '#38858a',
+         blue: '#397097',
+         yellow: '#9b8238',
+         purple: '#7d53a2',
+         green: '#518a58',
+         gray: '#545764',
       },
       separator: '#DCE0E9',
       mode: 'light',
@@ -60,6 +68,14 @@ export const theme = createTheme({
       },
    }),
    components: {
+      MuiButton: {
+         styleOverrides: {
+            root: () => ({
+               textTransform: 'none',
+               letterSpacing: 0,
+            }),
+         },
+      },
       MuiCard: {
          styleOverrides: {
             root: ({ theme }) =>
@@ -99,16 +115,6 @@ export const theme = createTheme({
                   }),
             },
          ],
-      },
-      MuiCssBaseline: {
-         styleOverrides: {
-            '*': {
-               userSelect: 'none',
-               msUserSelect: 'none',
-               MozUserSelect: 'none',
-               msTouchSelect: 'none',
-            },
-         },
       },
       MuiLink: {
          defaultProps: {
