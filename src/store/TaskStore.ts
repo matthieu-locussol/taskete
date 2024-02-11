@@ -15,7 +15,28 @@ export class TaskStore {
    // @ts-expect-error
    private _store: Store;
 
-   public tasks: Task[] = [];
+   public currentTask: Task | undefined = undefined;
+
+   public tasks: Task[] = [
+      {
+         id: 1,
+         title: 'Task 1',
+         completed: false,
+         seconds: 0,
+      },
+      {
+         id: 2,
+         title: 'Task 2',
+         completed: false,
+         seconds: 0,
+      },
+      {
+         id: 3,
+         title: 'Task 3',
+         completed: false,
+         seconds: 0,
+      },
+   ];
 
    constructor(store: Store) {
       makeAutoObservable(this);
@@ -29,5 +50,17 @@ export class TaskStore {
 
    removeTask(taskId: number) {
       this.tasks = this.tasks.filter(({ id }) => id !== taskId);
+   }
+
+   toggleCompletion(taskId: number) {
+      const task = this.tasks.find(({ id }) => id === taskId);
+
+      if (task) {
+         task.completed = !task.completed;
+      }
+   }
+
+   setCurrentTask(task: Task) {
+      this.currentTask = task;
    }
 }

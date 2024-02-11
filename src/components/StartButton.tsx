@@ -9,7 +9,11 @@ import { Color } from '../store/SettingsStore';
 interface StartButtonProps extends ButtonProps {}
 
 export const StartButton = observer((props: StartButtonProps) => {
-   const audio = useMemo(() => new Audio('/audio/start_button.wav'), []);
+   const audio = useMemo(() => {
+      const audioObject = new Audio('/audio/start_button.wav');
+      audioObject.volume = 0.5;
+      return audioObject;
+   }, []);
    const { settingsStore } = useStore();
 
    return (

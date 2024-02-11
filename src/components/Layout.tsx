@@ -34,6 +34,7 @@ const StyledContainer = styled(Container)(({ theme }) =>
    theme.unstable_sx({
       paddingLeft: 0,
       paddingRight: 0,
+      paddingBottom: theme.spacing(4),
    }),
 );
 

@@ -11,7 +11,7 @@ export const Timers = observer(() => {
 
    return (
       <Box display="flex" flexDirection="column" alignItems="center">
-         <Card maxWidth="sm" sx={{ mt: 2 }}>
+         <Card maxWidth="sm" sx={{ my: 2 }}>
             <StyledTabs
                value={pomodoroStore.state}
                onChange={(_, newState: PomodoroState) => pomodoroStore.setState(newState)}
@@ -26,7 +26,7 @@ export const Timers = observer(() => {
                   label={pomodoroStore.remainingSecondsStr}
                />
             </Box>
-            <Box display="flex" justifyContent="center">
+            <Box display="flex" justifyContent="center" mb={1}>
                <NoSsr>
                   <StartButton
                      disableRipple
