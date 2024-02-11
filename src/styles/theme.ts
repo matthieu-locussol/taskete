@@ -70,9 +70,13 @@ export const theme = createTheme({
    components: {
       MuiButton: {
          styleOverrides: {
-            root: () => ({
+            root: ({ theme }) => ({
                textTransform: 'none',
                letterSpacing: 0,
+               fontWeight: 'bold',
+               backgroundColor: '#FFFFFF1A',
+               paddingLeft: theme.spacing(2),
+               paddingRight: theme.spacing(2),
             }),
          },
       },

@@ -25,7 +25,7 @@ export const Header = () => {
                Taskete
             </Typography>
          </Stack>
-         <Stack direction="row" gap={1}>
+         <Stack direction="row" gap={2}>
             {isMobile ? (
                <IconButton color="primary">
                   <StatsIcon />
@@ -46,7 +46,7 @@ export const Header = () => {
                </Button>
             )}
             <IconButton>
-               <LogInIcon color="primary" />
+               <LogInIcon fontSize="small" color="primary" />
             </IconButton>
          </Stack>
       </Root>

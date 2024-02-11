@@ -36,8 +36,8 @@ const StyledContainer = styled(Container)(({ theme }) =>
 
 const HeaderDivider = styled(Divider)(({ theme }) =>
    theme.unstable_sx({
-      marginTop: theme.spacing(1),
-      marginBottom: theme.spacing(1),
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
       mx: { xs: -2, sm: 0 },
    }),
 );

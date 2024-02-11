@@ -14,7 +14,7 @@ const zColor = z.union([
 export type Color = z.infer<typeof zColor>;
 
 export class SettingsStore {
-   color: Color = 'red';
+   color: Color = 'green';
 
    constructor() {
       makeAutoObservable(this);
