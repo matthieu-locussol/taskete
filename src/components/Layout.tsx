@@ -39,5 +39,6 @@ const HeaderDivider = styled(Divider)(({ theme }) =>
       marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2),
       mx: { xs: -2, sm: 0 },
+      border: '1px solid #FFFFFF99',
    }),
 );

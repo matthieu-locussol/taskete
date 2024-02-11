@@ -35,7 +35,6 @@ export const Header = () => {
                   Statistics
                </Button>
             )}
-
             {isMobile ? (
                <IconButton color="primary">
                   <SettingsIcon />
@@ -45,8 +44,8 @@ export const Header = () => {
                   Settings
                </Button>
             )}
-            <IconButton>
-               <LogInIcon fontSize="small" color="primary" />
+            <IconButton color="primary">
+               <LogInIcon fontSize="small" />
             </IconButton>
          </Stack>
       </Root>
