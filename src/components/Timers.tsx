@@ -1,11 +1,12 @@
 import { Box, NoSsr, Tab, Tabs, styled, tabsClasses } from '@mui/material';
+import { observer } from 'mobx-react-lite';
 import { Card } from '../components/Card';
 import { StartButton } from '../components/StartButton';
 import { Timer } from '../components/Timer';
 import { useStore } from '../store';
 import { PomodoroState } from '../store/PomodoroStore';
 
-export const Timers = () => {
+export const Timers = observer(() => {
    const { pomodoroStore } = useStore();
 
    return (
@@ -41,7 +42,7 @@ export const Timers = () => {
          </Card>
       </Box>
    );
-};
+});
 
 const StyledTabs = styled(Tabs)(() => ({
    [`& .${tabsClasses.flexContainer}`]: {

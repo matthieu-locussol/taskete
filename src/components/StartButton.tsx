@@ -1,13 +1,14 @@
 'use client';
 
 import { Button, ButtonProps, styled } from '@mui/material';
+import { observer } from 'mobx-react-lite';
 import { useMemo } from 'react';
 import { useStore } from '../store';
 import { Color } from '../store/SettingsStore';
 
 interface StartButtonProps extends ButtonProps {}
 
-export const StartButton = (props: StartButtonProps) => {
+export const StartButton = observer((props: StartButtonProps) => {
    const audio = useMemo(() => new Audio('/audio/start_button.wav'), []);
    const { settingsStore } = useStore();
 
@@ -28,7 +29,7 @@ export const StartButton = (props: StartButtonProps) => {
          }}
       />
    );
-};
+});
 
 interface StyleProps {
    flatColor: Color;
