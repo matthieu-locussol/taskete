@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs, styled, tabsClasses } from '@mui/material';
+import { Box, NoSsr, Tab, Tabs, styled, tabsClasses } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import Head from 'next/head';
 import { Card } from '../components/Card';
@@ -32,16 +32,19 @@ const Index = observer(() => {
                      label={pomodoroStore.remainingSecondsStr}
                   />
                </Box>
-               <StartButton
-                  disableRipple
-                  onClick={() =>
-                     pomodoroStore.paused ? pomodoroStore.start() : pomodoroStore.pause()
-                  }
-                  paused={pomodoroStore.paused}
-                  sx={{ m: 'auto' }}
-               >
-                  {pomodoroStore.paused ? 'Start' : 'Pause'}
-               </StartButton>
+               <Box display="flex" justifyContent="center">
+                  <NoSsr>
+                     <StartButton
+                        disableRipple
+                        onClick={() =>
+                           pomodoroStore.paused ? pomodoroStore.start() : pomodoroStore.pause()
+                        }
+                        sx={{ m: 'auto' }}
+                     >
+                        {pomodoroStore.paused ? 'Start' : 'Pause'}
+                     </StartButton>
+                  </NoSsr>
+               </Box>
             </Card>
          </Box>
       </Layout>

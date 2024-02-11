@@ -12,6 +12,7 @@ const zTask = z.object({
 export type Task = z.infer<typeof zTask>;
 
 export class TaskStore {
+   // @ts-expect-error
    private _store: Store;
 
    public tasks: Task[] = [];

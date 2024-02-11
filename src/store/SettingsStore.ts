@@ -23,7 +23,7 @@ export class SettingsStore {
 
    public longBreakColor: Color = 'blue';
 
-   public workingSeconds: number = 1 * 60 + 1;
+   public workingSeconds: number = 25 * 60;
 
    public shortBreakSeconds: number = 5 * 60;
 

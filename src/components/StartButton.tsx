@@ -1,12 +1,14 @@
+'use client';
+
 import { Button, ButtonProps, styled } from '@mui/material';
+import { useMemo } from 'react';
 import { useStore } from '../store';
 import { Color } from '../store/SettingsStore';
 
-interface StartButtonProps extends ButtonProps {
-   paused: boolean;
-}
+interface StartButtonProps extends ButtonProps {}
 
 export const StartButton = (props: StartButtonProps) => {
+   const audio = useMemo(() => new Audio('/audio/start_button.wav'), []);
    const { settingsStore } = useStore();
 
    return (
@@ -15,18 +17,26 @@ export const StartButton = (props: StartButtonProps) => {
          disableElevation
          flatColor={settingsStore.currentColor}
          {...props}
+         onClick={(e) => {
+            audio.pause();
+            audio.currentTime = 0;
+            audio.play();
+
+            if (props.onClick) {
+               props.onClick(e);
+            }
+         }}
       />
    );
 };
 
 interface StyleProps {
    flatColor: Color;
-   paused: boolean;
 }
 
 const StyledButton = styled(Button, {
-   shouldForwardProp: (prop) => prop !== 'flatColor' && prop !== 'paused',
-})<StyleProps>(({ flatColor, paused, theme }) => ({
+   shouldForwardProp: (prop) => prop !== 'flatColor',
+})<StyleProps>(({ flatColor, theme }) => ({
    background: theme.palette.primary.main,
    padding: theme.spacing(1.25, 2),
    minWidth: 200,
