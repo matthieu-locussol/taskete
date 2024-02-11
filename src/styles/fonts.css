@@ -1,15 +1,15 @@
 @font-face {
    font-display: swap;
-   font-family: 'NotoSansJP';
+   font-family: 'MPlusRounded1C';
    font-style: normal;
    font-weight: 400;
-   src: url('/fonts/NotoSansJP400.woff2') format('woff2');
+   src: url('/fonts/MPlusRounded1C400.woff2') format('woff2');
 }
 
 @font-face {
    font-display: swap;
-   font-family: 'NotoSansJP';
+   font-family: 'MPlusRounded1C';
    font-style: normal;
    font-weight: 700;
-   src: url('/fonts/NotoSansJP700.woff2') format('woff2');
+   src: url('/fonts/MPlusRounded1C700.woff2') format('woff2');
 }
