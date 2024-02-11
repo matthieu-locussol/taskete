@@ -73,9 +73,9 @@ const StyledTypography = styled(Typography, {
 })<StyleProps>(({ secondsType }) => ({
    transition: 'all 0.5s',
    fontSize: {
-      seconds: '4rem',
-      minutes: '3rem',
-      hours: '2rem',
+      seconds: '6rem',
+      minutes: '4rem',
+      hours: '2.75rem',
    }[secondsType],
    fontWeight: 'bold',
 }));
