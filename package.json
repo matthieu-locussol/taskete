@@ -1,0 +1,43 @@
+{
+   "name": "taskete",
+   "version": "1.0.0",
+   "description": "Small browser-based to-do application",
+   "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start",
+      "lint": "next lint"
+   },
+   "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
+   "license": "MIT",
+   "devDependencies": {
+      "@types/node": "20.11.17",
+      "@types/react": "^18.2.55",
+      "@types/react-dom": "^18.2.19",
+      "@typescript-eslint/eslint-plugin": "^6.21.0",
+      "@typescript-eslint/parser": "^6.21.0",
+      "eslint-config-airbnb": "^19.0.4",
+      "eslint-config-airbnb-typescript": "^17.1.0",
+      "eslint-config-next": "^14.1.0",
+      "eslint-config-prettier": "^9.1.0",
+      "eslint-plugin-import": "^2.29.1",
+      "eslint-plugin-jsx-a11y": "^6.8.0",
+      "eslint-plugin-mui-path-imports": "^0.0.15",
+      "eslint-plugin-react": "^7.33.2",
+      "typescript": "^5.3.3"
+   },
+   "dependencies": {
+      "@auth0/nextjs-auth0": "^3.5.0",
+      "@emotion/cache": "^11.11.0",
+      "@emotion/react": "^11.11.3",
+      "@emotion/server": "^11.11.0",
+      "@emotion/styled": "^11.11.0",
+      "@mui/icons-material": "^5.15.9",
+      "@mui/material": "^5.15.9",
+      "mobx": "^6.12.0",
+      "mobx-react-lite": "^4.0.5",
+      "next": "^14.1.0",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+   }
+}
