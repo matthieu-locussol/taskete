@@ -57,12 +57,13 @@ export const Tasks = observer(() => {
             onClose={() => taskStore.setOpenNewTaskDialog(false)}
          >
             <DialogTitle
+               fontWeight="bold"
                sx={{
                   opacity: 0.9,
                   background: `${theme.palette.flat[settingsStore.currentColor]}DD`,
                }}
             >
-               <b>New task</b>
+               New task
             </DialogTitle>
             <DialogContent
                sx={{
