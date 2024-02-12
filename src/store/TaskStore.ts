@@ -6,6 +6,7 @@ const zTask = z.object({
    id: z.number(),
    title: z.string(),
    completed: z.boolean(),
+   tags: z.array(z.string()),
 });
 
 export type Task = z.infer<typeof zTask>;
@@ -18,18 +19,21 @@ export class TaskStore {
    public tasks: Task[] = [
       {
          id: 1,
-         title: 'Task 1',
+         title: 'Task 1 - This is a very long task name but I believe it could fit',
          completed: false,
+         tags: ['french'],
       },
       {
          id: 2,
          title: 'Task 2',
          completed: false,
+         tags: ['french'],
       },
       {
          id: 3,
          title: 'Task 3',
          completed: false,
+         tags: ['rotary'],
       },
    ];
 

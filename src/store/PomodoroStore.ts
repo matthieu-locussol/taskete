@@ -113,6 +113,12 @@ export class PomodoroStore {
             });
          } else {
             window.clearInterval(intervalId);
+
+            if (this.state === 'working') {
+               this.setState('break');
+            } else if (this.state === 'break') {
+               this.setState('working');
+            }
          }
       }, 1000);
 

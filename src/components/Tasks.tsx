@@ -7,11 +7,9 @@ import {
    DialogContent,
    DialogTitle,
    Divider,
-   FormControlLabel,
    IconButton,
    NoSsr,
    Stack,
-   Switch,
    TextField,
    Typography,
    inputBaseClasses,
@@ -84,18 +82,6 @@ export const Tasks = observer(() => {
                   variant="outlined"
                   flatColor={settingsStore.currentColor}
                />
-               <FormControlLabel
-                  control={<Switch size="medium" />}
-                  label="Completed"
-                  labelPlacement="start"
-                  slotProps={{
-                     typography: {
-                        fontWeight: 'bold',
-                     },
-                  }}
-                  sx={{ m: 0, mt: 0.5, mb: 1, ml: 1 }}
-               />
-               <StyledFieldset flatColor={settingsStore.currentColor}>lol</StyledFieldset>
             </DialogContent>
             <DialogActions
                sx={{
@@ -139,17 +125,5 @@ const StyledTextField = styled(TextField, {
       [`& .${outlinedInputClasses.notchedOutline}`]: {
          borderColor: theme.palette.flat[flatColor],
       },
-   }),
-);
-
-const StyledFieldset = styled('fieldset', {
-   shouldForwardProp: (prop) => prop !== 'flatColor',
-})<StyleProps>(({ flatColor, theme }) =>
-   theme.unstable_sx({
-      border: `1px solid ${theme.palette.flat[flatColor]}`,
-      background: '#FFFFFF44',
-      borderRadius: 1.5,
-      padding: theme.spacing(1, 1.5),
-      margin: 0,
    }),
 );

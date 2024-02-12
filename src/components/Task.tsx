@@ -1,5 +1,5 @@
 import CheckIcon from '@mui/icons-material/CheckCircleRounded';
-import { Box, Typography, styled } from '@mui/material';
+import { Box, Chip, Typography, styled } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useMemo } from 'react';
 import { useStore } from '../store';
@@ -21,33 +21,48 @@ export const Task = observer(({ task }: TaskProps) => {
          flatColor={settingsStore.currentColor}
          onClick={() => taskStore.setCurrentTask(task)}
       >
-         <CheckIcon
-            fontSize="large"
-            onClick={(e) => {
-               e.stopPropagation();
+         <TaskTitle>
+            <CheckIcon
+               fontSize="large"
+               onClick={(e) => {
+                  e.stopPropagation();
 
-               audio.pause();
-               audio.currentTime = 0;
-               audio.play();
+                  audio.pause();
+                  audio.currentTime = 0;
+                  audio.play();
 
-               taskStore.toggleCompletion(task.id);
-            }}
-            sx={({ palette }) => ({
-               color: task.completed ? palette.flat[settingsStore.currentColor] : '#808080CC',
-               ':hover': {
-                  opacity: 0.85,
-               },
-            })}
-         />
-         <Typography
-            variant="h3"
-            fontWeight="bold"
-            sx={({ palette }) => ({
-               color: task.completed ? palette.flat[settingsStore.currentColor] : '#808080',
-            })}
-         >
-            {task.title}
-         </Typography>
+                  taskStore.toggleCompletion(task.id);
+               }}
+               sx={({ palette }) => ({
+                  color: task.completed ? palette.flat[settingsStore.currentColor] : '#808080CC',
+                  ':hover': {
+                     opacity: 0.85,
+                  },
+               })}
+            />
+            <Typography
+               variant="h3"
+               fontWeight="bold"
+               sx={({ palette }) => ({
+                  color: task.completed ? palette.flat[settingsStore.currentColor] : '#808080',
+               })}
+            >
+               {task.title}
+            </Typography>
+         </TaskTitle>
+         <Tags>
+            {task.tags.map((tag) => (
+               <Chip
+                  size="small"
+                  label={tag}
+                  sx={({ palette }) => ({
+                     backgroundColor: task.completed
+                        ? palette.flat[settingsStore.currentColor]
+                        : '#808080',
+                  })}
+               />
+            ))}
+         </Tags>
       </Root>
    );
 });
@@ -67,9 +82,6 @@ const Root = styled(Box, {
          : selected
          ? '8px solid #808080CC'
          : '8px solid transparent',
-      display: 'flex',
-      alignItems: 'center',
-      gap: 2,
       padding: theme.spacing(2),
       borderRadius: 2,
       backgroundColor: completed
@@ -91,3 +103,17 @@ const Root = styled(Box, {
       },
    }),
 );
+
+const TaskTitle = styled(Box)(({ theme }) => ({
+   width: '100%',
+   display: 'flex',
+   alignItems: 'center',
+   gap: theme.spacing(2),
+}));
+
+const Tags = styled(Box)(({ theme }) => ({
+   display: 'flex',
+   gap: 0.5,
+   marginTop: theme.spacing(1),
+   justifyContent: 'end',
+}));
