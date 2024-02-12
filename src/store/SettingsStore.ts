@@ -19,15 +19,13 @@ export class SettingsStore {
 
    public workingColor: Color = 'green';
 
-   public shortBreakColor: Color = 'red';
+   public breakColor: Color = 'red';
 
-   public longBreakColor: Color = 'blue';
+   public freemodeColor: Color = 'blue';
 
    public workingSeconds: number = 25 * 60;
 
-   public shortBreakSeconds: number = 5 * 60;
-
-   public longBreakSeconds: number = 15 * 60;
+   public breakSeconds: number = 5 * 60;
 
    constructor(store: Store) {
       makeAutoObservable(this);
@@ -43,19 +41,15 @@ export class SettingsStore {
       this.workingSeconds = workingSeconds;
    }
 
-   setShortBreakSeconds(shortBreakSeconds: number) {
-      this.shortBreakSeconds = shortBreakSeconds;
-   }
-
-   setLongBreakSeconds(longBreakSeconds: number) {
-      this.longBreakSeconds = longBreakSeconds;
+   setBreakSeconds(breakSeconds: number) {
+      this.breakSeconds = breakSeconds;
    }
 
    get currentColor() {
       return {
          working: this.workingColor,
-         shortBreak: this.shortBreakColor,
-         longBreak: this.longBreakColor,
+         break: this.breakColor,
+         freemode: this.freemodeColor,
       }[this._store.pomodoroStore.state];
    }
 }

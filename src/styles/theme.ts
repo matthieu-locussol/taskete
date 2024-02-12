@@ -1,4 +1,4 @@
-import { tabClasses, tabsClasses } from '@mui/material';
+import { outlinedInputClasses, tabClasses, tabsClasses } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 
 export const theme = createTheme({
@@ -31,8 +31,8 @@ export const theme = createTheme({
          md: '0 1px 2px 0 rgba(31, 51, 86, 0.24)',
       },
       background: {
-         default: '#FFFFFF',
-         paper: '#FFFFFF',
+         default: '#fafafa',
+         paper: '#fafafa',
       },
       flat: {
          red: '#ba4949',
@@ -118,6 +118,15 @@ export const theme = createTheme({
                   }),
             },
          ],
+      },
+      MuiDialogContent: {
+         styleOverrides: {
+            root: {
+               [`& .${outlinedInputClasses.notchedOutline}`]: {
+                  background: '#FFFFFF44',
+               },
+            },
+         },
       },
       MuiLink: {
          defaultProps: {

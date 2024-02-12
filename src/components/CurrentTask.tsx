@@ -6,12 +6,12 @@ export const CurrentTask = observer(() => {
    const { taskStore } = useStore();
 
    return taskStore.currentTask ? (
-      <Typography variant="h3" align="center" fontStyle="italic" sx={{ my: 2 }}>
+      <Typography variant="h3" align="center" fontWeight="bold" fontStyle="italic" sx={{ my: 2 }}>
          {taskStore.currentTask.title}
       </Typography>
    ) : (
       <Typography variant="h3" align="center" sx={{ my: 2 }}>
-         Select a task to get started
+         No task is selected
       </Typography>
    );
 });

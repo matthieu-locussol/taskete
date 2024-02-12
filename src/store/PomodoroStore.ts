@@ -2,11 +2,7 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import { z } from 'zod';
 import { Store } from './Store';
 
-const zPomodoroState = z.union([
-   z.literal('working'),
-   z.literal('shortBreak'),
-   z.literal('longBreak'),
-]);
+const zPomodoroState = z.union([z.literal('working'), z.literal('break'), z.literal('freemode')]);
 
 export type PomodoroState = z.infer<typeof zPomodoroState>;
 
@@ -32,8 +28,8 @@ export class PomodoroStore {
    get maxSeconds() {
       return {
          working: this._store.settingsStore.workingSeconds,
-         shortBreak: this._store.settingsStore.shortBreakSeconds,
-         longBreak: this._store.settingsStore.longBreakSeconds,
+         break: this._store.settingsStore.breakSeconds,
+         freemode: -1,
       }[this.state];
    }
 
@@ -82,8 +78,8 @@ export class PomodoroStore {
    get titleSuffix() {
       return {
          working: 'Working time',
-         shortBreak: 'Break time',
-         longBreak: 'Break time',
+         break: 'Break time',
+         freemode: 'Freemode',
       }[this.state];
    }
 

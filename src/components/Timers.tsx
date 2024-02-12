@@ -17,8 +17,8 @@ export const Timers = observer(() => {
                onChange={(_, newState: PomodoroState) => pomodoroStore.setState(newState)}
             >
                <Tab label="Working" value="working" />
-               <Tab label="Short break" value="shortBreak" />
-               <Tab label="Long break" value="longBreak" />
+               <Tab label="Break" value="break" />
+               <Tab label="Freemode" value="freemode" />
             </StyledTabs>
             <Box display="flex" justifyContent="center" mt={2} mb={4}>
                <Timer

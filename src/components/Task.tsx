@@ -23,7 +23,9 @@ export const Task = observer(({ task }: TaskProps) => {
       >
          <CheckIcon
             fontSize="large"
-            onClick={() => {
+            onClick={(e) => {
+               e.stopPropagation();
+
                audio.pause();
                audio.currentTime = 0;
                audio.play();
@@ -60,8 +62,10 @@ const Root = styled(Box, {
    shouldForwardProp: (prop) => prop !== 'completed' && prop !== 'flatColor' && prop !== 'selected',
 })<StyleProps>(({ completed, selected, flatColor, theme }) =>
    theme.unstable_sx({
-      borderLeft: selected
+      borderLeft: completed
          ? `8px solid ${theme.palette.flat[flatColor]}A1`
+         : selected
+         ? '8px solid #808080CC'
          : '8px solid transparent',
       display: 'flex',
       alignItems: 'center',
@@ -69,8 +73,9 @@ const Root = styled(Box, {
       padding: theme.spacing(2),
       borderRadius: 2,
       backgroundColor: completed
-         ? `${theme.palette.background.paper}DD`
+         ? `${theme.palette.background.paper}BB`
          : theme.palette.background.paper,
+      fontStyle: completed ? 'italic' : 'normal',
       color: theme.palette.text.primary,
       transition: 'background-color 0.3s, box-shadow 0.3s, margin 0.15s',
       textDecorationLine: completed ? 'line-through' : 'none',

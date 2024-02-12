@@ -25,7 +25,6 @@ const Index = observer(() => {
             <Fireworks
                autorun={{
                   speed: 1,
-                  duration: 1500,
                }}
             />
          )}
