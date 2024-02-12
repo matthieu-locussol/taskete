@@ -47,6 +47,9 @@ dependencies:
   react:
     specifier: ^18.2.0
     version: 18.2.0
+  react-canvas-confetti:
+    specifier: ^2.0.5
+    version: 2.0.5(react@18.2.0)
   react-dom:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
@@ -1126,6 +1129,10 @@ packages:
       tslib: 2.6.2
     dev: false
 
+  /@types/canvas-confetti@1.6.4:
+    resolution: {integrity: sha512-fNyZ/Fdw/Y92X0vv7B+BD6ysHL4xVU5dJcgzgxLdGbn8O3PezZNIJpml44lKM0nsGur+o/6+NZbZeNTt00U1uA==}
+    dev: false
+
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
     dev: false
@@ -1607,6 +1614,10 @@ packages:
 
   /caniuse-lite@1.0.30001585:
     resolution: {integrity: sha512-yr2BWR1yLXQ8fMpdS/4ZZXpseBgE7o4g41x3a6AJOqZuOi+iE/WdJYAuZ6Y95i4Ohd2Y+9MzIWRR+uGABH4s3Q==}
+    dev: false
+
+  /canvas-confetti@1.9.2:
+    resolution: {integrity: sha512-6Xi7aHHzKwxZsem4mCKoqP6YwUG3HamaHHAlz1hTNQPCqXhARFpSXnkC9TWlahHY5CG6hSL5XexNjxK8irVErg==}
     dev: false
 
   /chai@4.4.1:
@@ -3439,6 +3450,16 @@ packages:
   /queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
+
+  /react-canvas-confetti@2.0.5(react@18.2.0):
+    resolution: {integrity: sha512-fL5WMHdNeLFqCMkgm0k4FzjPviEIv702zLl8GOaBonbBN0YG7YUsMyTV4OTEh+ukJBIs9082vh/L8s7yPeU+FA==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      '@types/canvas-confetti': 1.6.4
+      canvas-confetti: 1.9.2
+      react: 18.2.0
+    dev: false
 
   /react-dom@18.2.0(react@18.2.0):
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}

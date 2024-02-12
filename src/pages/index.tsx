@@ -1,6 +1,7 @@
 import { Container, styled } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import Head from 'next/head';
+import Fireworks from 'react-canvas-confetti/dist/presets/fireworks';
 import { CurrentTask } from '../components/CurrentTask';
 import { Layout } from '../components/Layout';
 import { Tasks } from '../components/Tasks';
@@ -8,7 +9,7 @@ import { Timers } from '../components/Timers';
 import { useStore } from '../store';
 
 const Index = observer(() => {
-   const { pomodoroStore } = useStore();
+   const { pomodoroStore, taskStore } = useStore();
 
    return (
       <Layout>
@@ -20,6 +21,14 @@ const Index = observer(() => {
             <CurrentTask />
             <Tasks />
          </StyledContainer>
+         {taskStore.showFireworks && (
+            <Fireworks
+               autorun={{
+                  speed: 1,
+                  duration: 1500,
+               }}
+            />
+         )}
       </Layout>
    );
 });

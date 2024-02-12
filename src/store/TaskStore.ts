@@ -38,6 +38,8 @@ export class TaskStore {
       },
    ];
 
+   public showFireworks = false;
+
    constructor(store: Store) {
       makeAutoObservable(this);
 
@@ -57,6 +59,14 @@ export class TaskStore {
 
       if (task) {
          task.completed = !task.completed;
+      }
+
+      if (!this.tasks.some((task) => !task.completed)) {
+         this.showFireworks = true;
+
+         setTimeout(() => {
+            this.showFireworks = false;
+         }, 1500);
       }
    }
 
