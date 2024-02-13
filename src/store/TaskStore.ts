@@ -143,6 +143,23 @@ export class TaskStore {
       this.dirty = true;
    }
 
+   saveCurrentTaskCompletion() {
+      if (this.currentTask !== undefined) {
+         const secondsSpent = this._store.pomodoroStore.elapsedSeconds;
+
+         fetch(
+            `/api/saveTime?sub=${this._store.settingsStore.userId}&id=${this.currentTask.id}&seconds=${secondsSpent}`,
+         )
+            .then((res) => res.json())
+            .then(() => {
+               // Do nothing
+            })
+            .catch((error) => {
+               console.error('An error occurred while updating the task.', error);
+            });
+      }
+   }
+
    setCurrentTask(task: Task) {
       if (this.currentTask && this.currentTask.id === task.id) {
          this.currentTask = undefined;

@@ -129,6 +129,7 @@ export class PomodoroStore {
             }
 
             if (this.state === 'working') {
+               this._store.taskStore.saveCurrentTaskCompletion();
                this.setState('break');
             } else if (this.state === 'break') {
                this.setState('working');
