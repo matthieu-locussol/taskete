@@ -80,16 +80,22 @@ export class TaskStore {
       )
          .then((res) => res.json())
          .then((data: CreateTaskResults) => {
-            this.tasks = [data.task, ...this.tasks];
-            this.setOpenNewTaskDialog(false);
+            runInAction(() => {
+               this.tasks = [data.task, ...this.tasks];
+               this.setOpenNewTaskDialog(false);
+            });
          })
          .catch((error) => {
-            this.errorMessage = error?.message || 'An error occurred while creating the tag.';
+            runInAction(() => {
+               this.errorMessage = error?.message || 'An error occurred while creating the tag.';
+            });
          })
          .finally(() => {
-            this.setTaskNameField('');
-            this.setTaskTagsField([]);
-            this.setLoading(false);
+            runInAction(() => {
+               this.setTaskNameField('');
+               this.setTaskTagsField([]);
+               this.setLoading(false);
+            });
          });
    }
 
@@ -116,8 +122,10 @@ export class TaskStore {
          )
             .then((res) => res.json())
             .then((data: { task: Task }) => {
-               const index = this.tasks.findIndex(({ id }) => id === data.task.id);
-               this.tasks[index] = data.task;
+               runInAction(() => {
+                  const index = this.tasks.findIndex(({ id }) => id === data.task.id);
+                  this.tasks[index] = data.task;
+               });
             })
             .catch((error) => {
                console.error('An error occurred while updating the task.', error);
@@ -171,7 +179,9 @@ export class TaskStore {
 
    get orderedTasksByDate() {
       if (this.dirty) {
-         this.dirty = false;
+         runInAction(() => {
+            this.dirty = false;
+         });
       }
 
       return [...this.tasks]
