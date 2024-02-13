@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { Tag } from '../../store/TagStore';
 import { Task } from '../../store/TaskStore';
 import { prisma } from '../../utils/prisma';
 
@@ -7,7 +8,9 @@ export const config = {
 };
 
 export interface TasksResults {
-   tasks: Task[];
+   tasks: (Task & {
+      tags: Tag[];
+   })[];
 }
 
 export default async function handler(req: NextRequest) {
@@ -23,6 +26,21 @@ export default async function handler(req: NextRequest) {
    const tasks = await prisma.task.findMany({
       where: {
          sub,
+         date: {
+            gte: new Date(new Date().setHours(0, 0, 0, 0)),
+            lte: new Date(new Date().setHours(23, 59, 59, 999)),
+         },
+      },
+      select: {
+         id: true,
+         title: true,
+         completed: true,
+         tags: {
+            select: {
+               id: true,
+               name: true,
+            },
+         },
       },
    });
 

@@ -182,6 +182,11 @@ export const Tasks = observer(() => {
             fullWidth
             open={taskStore.openNewTaskDialog}
             onClose={() => taskStore.setOpenNewTaskDialog(false)}
+            component="form"
+            onSubmit={(e) => {
+               e.preventDefault();
+               taskStore.addTask();
+            }}
          >
             <DialogTitle
                fontWeight="bold"
@@ -274,6 +279,11 @@ export const Tasks = observer(() => {
                      </MenuItem>
                   ))}
                </Select>
+               {taskStore.isErrored && (
+                  <Alert variant="filled" severity="error" sx={{ fontSize: 12, mt: 1 }}>
+                     {taskStore.errorMessage}
+                  </Alert>
+               )}
             </DialogContent>
             <DialogActions
                sx={{
@@ -288,7 +298,7 @@ export const Tasks = observer(() => {
                   Cancel
                </Button>
                <Button disabled={!taskStore.canAddTask} type="submit">
-                  Create
+                  {taskStore.loading ? <CircularProgress size={24} /> : 'Create'}
                </Button>
             </DialogActions>
          </Dialog>

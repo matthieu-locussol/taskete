@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { z } from 'zod';
+import { CreateTaskResults } from '../pages/api/createTask';
 import { Store } from './Store';
 import { Tag, zTag } from './TagStore';
 
@@ -29,6 +30,10 @@ export class TaskStore {
 
    public initialized = false;
 
+   public loading = false;
+
+   public errorMessage = '';
+
    constructor(store: Store) {
       makeAutoObservable(this);
 
@@ -40,8 +45,47 @@ export class TaskStore {
       this.initialized = true;
    }
 
-   addTask(task: Task) {
-      this.tasks.push(task);
+   addTask() {
+      this.setLoading(true);
+
+      if (this.taskNameField.trim().length === 0) {
+         this.errorMessage = 'Task name cannot be empty!';
+         this.setLoading(false);
+         return;
+      }
+
+      if (this.tasks.some((t) => t.title === this.taskNameField)) {
+         this.errorMessage = `Task "${this.taskNameField}" already exists!`;
+         this.setLoading(false);
+         return;
+      }
+
+      if (this.taskTagsField.length === 0) {
+         this.errorMessage = 'Task must have at least one tag!';
+         this.setLoading(false);
+         return;
+      }
+
+      this.errorMessage = '';
+
+      fetch(
+         `/api/createTask?sub=${this._store.settingsStore.userId}&name=${
+            this.taskNameField
+         }&tags=${this.taskTagsField.map((t) => JSON.stringify(t)).join('#;#')}`,
+      )
+         .then((res) => res.json())
+         .then((data: CreateTaskResults) => {
+            this.tasks.push(data.task);
+            this.setOpenNewTaskDialog(false);
+         })
+         .catch((error) => {
+            this.errorMessage = error?.message || 'An error occurred while creating the tag.';
+         })
+         .finally(() => {
+            this.setTaskNameField('');
+            this.setTaskTagsField([]);
+            this.setLoading(false);
+         });
    }
 
    removeTask(taskId: number) {
@@ -93,5 +137,13 @@ export class TaskStore {
 
    get canAddTask() {
       return this.taskNameField.length > 0 && this.taskTagsField.length > 0;
+   }
+
+   setLoading(loading: boolean) {
+      this.loading = loading;
+   }
+
+   get isErrored() {
+      return this.errorMessage.length > 0;
    }
 }
