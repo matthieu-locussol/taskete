@@ -19,6 +19,8 @@ export class PomodoroStore {
 
    public elapsedSeconds: number = 0;
 
+   public endAudio: HTMLAudioElement | null = null;
+
    constructor(store: Store) {
       makeAutoObservable(this);
 
@@ -121,6 +123,11 @@ export class PomodoroStore {
          } else {
             window.clearInterval(intervalId);
 
+            if (this.endAudio !== null) {
+               this.endAudio.currentTime = 0;
+               this.endAudio.play();
+            }
+
             if (this.state === 'working') {
                this.setState('break');
             } else if (this.state === 'break') {
@@ -153,5 +160,10 @@ export class PomodoroStore {
    reset() {
       this.elapsedSeconds = 0;
       this.pause();
+   }
+
+   setEndAudio(audio: HTMLAudioElement) {
+      this.endAudio = audio;
+      this.endAudio.volume = 0.5;
    }
 }

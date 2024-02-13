@@ -12,6 +12,8 @@ import {
    IconButton,
    Radio,
    RadioGroup,
+   Stack,
+   TextField,
    Typography,
    styled,
 } from '@mui/material';
@@ -142,7 +144,29 @@ export const UserButton = observer(() => {
                   background: `${theme.palette.flat[settingsStore.currentColor]}DD`,
                }}
             >
-               <Typography>Working color</Typography>
+               <Box display="flex" justifyContent="space-between" gap={1} sx={{ mt: 2 }}>
+                  <Stack>
+                     <Typography>Working time</Typography>
+                     <TextField
+                        size="small"
+                        type="number"
+                        value={settingsStore.workingSeconds / 60}
+                        onChange={(e) =>
+                           settingsStore.setWorkingSeconds(Number(e.target.value) * 60)
+                        }
+                     />
+                  </Stack>
+                  <Stack>
+                     <Typography>Break time</Typography>
+                     <TextField
+                        size="small"
+                        type="number"
+                        value={settingsStore.breakSeconds / 60}
+                        onChange={(e) => settingsStore.setBreakSeconds(Number(e.target.value) * 60)}
+                     />
+                  </Stack>
+               </Box>
+               <Typography sx={{ mt: 1 }}>Working color</Typography>
                <RadioGroup
                   sx={{
                      display: 'flex',

@@ -67,6 +67,7 @@ export class SettingsStore {
 
    setOpenSettingsDialog(open: boolean) {
       this.openSettingsDialog = open;
+      this._store.pomodoroStore.pause();
    }
 
    setBreakColor(breakColor: Color) {
@@ -79,5 +80,6 @@ export class SettingsStore {
 
    setOpenStatisticsDialog(open: boolean) {
       this.openStatisticsDialog = open;
+      this._store.pomodoroStore.pause();
    }
 }

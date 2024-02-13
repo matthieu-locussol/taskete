@@ -18,6 +18,15 @@ const Index = observer(() => {
    const { user } = useUser();
 
    useEffect(() => {
+      if (typeof window !== 'undefined') {
+         const endAudio = new Audio('/audio/alarm.mp3');
+         endAudio.volume = 0.5;
+
+         pomodoroStore.setEndAudio(endAudio);
+      }
+   }, []);
+
+   useEffect(() => {
       if (user !== undefined) {
          settingsStore.setUserId(user.sub);
 

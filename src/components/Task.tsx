@@ -11,7 +11,18 @@ interface TaskProps {
 }
 
 export const Task = observer(({ task }: TaskProps) => {
-   const audio = useMemo(() => new Audio('/audio/check.mp3'), []);
+   const checkAudio = useMemo(() => {
+      const audioObject = new Audio('/audio/check.mp3');
+      audioObject.volume = 0.5;
+      return audioObject;
+   }, []);
+
+   const selectAudio = useMemo(() => {
+      const audioObject = new Audio('/audio/notification.mp3');
+      audioObject.volume = 0.5;
+      return audioObject;
+   }, []);
+
    const { settingsStore, taskStore } = useStore();
 
    return (
@@ -19,7 +30,13 @@ export const Task = observer(({ task }: TaskProps) => {
          completed={task.completed}
          selected={taskStore.currentTask !== undefined && taskStore.currentTask.id === task.id}
          flatColor={settingsStore.currentColor}
-         onClick={() => taskStore.setCurrentTask(task)}
+         onClick={() => {
+            selectAudio.pause();
+            selectAudio.currentTime = 0;
+            selectAudio.play();
+
+            taskStore.setCurrentTask(task);
+         }}
       >
          <TaskTitle>
             <CheckIcon
@@ -27,9 +44,9 @@ export const Task = observer(({ task }: TaskProps) => {
                onClick={(e) => {
                   e.stopPropagation();
 
-                  audio.pause();
-                  audio.currentTime = 0;
-                  audio.play();
+                  checkAudio.pause();
+                  checkAudio.currentTime = 0;
+                  checkAudio.play();
 
                   taskStore.toggleCompletion(task.id);
                }}
