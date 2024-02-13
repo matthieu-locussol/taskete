@@ -29,6 +29,8 @@ export class SettingsStore {
 
    public openSettingsDialog = false;
 
+   public openStatisticsDialog = false;
+
    constructor(store: Store) {
       makeAutoObservable(this);
 
@@ -73,5 +75,9 @@ export class SettingsStore {
 
    setFreemodeColor(freemodeColor: Color) {
       this.freemodeColor = freemodeColor;
+   }
+
+   setOpenStatisticsDialog(open: boolean) {
+      this.openStatisticsDialog = open;
    }
 }

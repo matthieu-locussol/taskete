@@ -31,11 +31,18 @@ export const Header = () => {
             {settingsStore.userId !== null && (
                <Box display="flex" gap={2}>
                   {isMobile ? (
-                     <IconButton color="primary">
+                     <IconButton
+                        color="primary"
+                        onClick={() => settingsStore.setOpenStatisticsDialog(true)}
+                     >
                         <StatsIcon />
                      </IconButton>
                   ) : (
-                     <Button size="small" startIcon={<StatsIcon />}>
+                     <Button
+                        size="small"
+                        startIcon={<StatsIcon />}
+                        onClick={() => settingsStore.setOpenStatisticsDialog(true)}
+                     >
                         Statistics
                      </Button>
                   )}

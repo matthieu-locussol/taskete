@@ -92,6 +92,38 @@ export const UserButton = observer(() => {
          <Dialog
             maxWidth="xs"
             fullWidth
+            open={settingsStore.openStatisticsDialog}
+            onClose={() => settingsStore.setOpenStatisticsDialog(false)}
+         >
+            <DialogTitle
+               fontWeight="bold"
+               sx={{
+                  opacity: 0.9,
+                  background: `${theme.palette.flat[settingsStore.currentColor]}DD`,
+               }}
+            >
+               Statistics
+            </DialogTitle>
+            <DialogContent
+               sx={{
+                  opacity: 0.9,
+                  background: `${theme.palette.flat[settingsStore.currentColor]}DD`,
+               }}
+            >
+               Coming soon ✨
+            </DialogContent>
+            <DialogActions
+               sx={{
+                  opacity: 0.9,
+                  background: `${theme.palette.flat[settingsStore.currentColor]}DD`,
+               }}
+            >
+               <Button onClick={() => settingsStore.setOpenStatisticsDialog(false)}>Ok</Button>
+            </DialogActions>
+         </Dialog>
+         <Dialog
+            maxWidth="xs"
+            fullWidth
             open={settingsStore.openSettingsDialog}
             onClose={() => settingsStore.setOpenSettingsDialog(false)}
          >
