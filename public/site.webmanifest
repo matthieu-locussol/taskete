@@ -15,6 +15,6 @@
    ],
    "theme_color": "#fafafa",
    "background_color": "#fafafa",
-   "start_url": "https://taskete.vercel.app",
+   "start_url": "/",
    "display": "standalone"
 }
