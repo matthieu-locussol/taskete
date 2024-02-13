@@ -16,7 +16,7 @@ interface TimerProps extends CircularProgressProps {
 }
 
 export const Timer = observer(({ value, label, ...rest }: TimerProps) => {
-   const { pomodoroStore, tagStore } = useStore();
+   const { pomodoroStore, tagStore, taskStore } = useStore();
 
    return (
       <Box sx={{ position: 'relative', display: 'inline-flex' }}>
@@ -36,7 +36,9 @@ export const Timer = observer(({ value, label, ...rest }: TimerProps) => {
             color="primary"
             size={256}
             thickness={1.5}
-            variant={tagStore.initialized ? 'determinate' : 'indeterminate'}
+            variant={
+               tagStore.initialized && taskStore.initialized ? 'determinate' : 'indeterminate'
+            }
             value={value}
             sx={{
                transition: 'all 0.3s',
@@ -47,7 +49,7 @@ export const Timer = observer(({ value, label, ...rest }: TimerProps) => {
             }}
             {...rest}
          />
-         {tagStore.initialized && (
+         {tagStore.initialized && taskStore.initialized && (
             <Box
                sx={{
                   top: 0,

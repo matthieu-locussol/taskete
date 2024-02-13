@@ -60,7 +60,7 @@ export const Tasks = observer(() => {
          <StyledDivider />
          <NoSsr>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-               {tagStore.initialized ? (
+               {tagStore.initialized && taskStore.initialized ? (
                   taskStore.tasks.map((task) => <Task key={task.id} task={task} />)
                ) : (
                   <>
@@ -68,6 +68,24 @@ export const Tasks = observer(() => {
                      <TaskSkeleton />
                      <TaskSkeleton />
                   </>
+               )}
+               {tagStore.initialized && taskStore.initialized && taskStore.tasks.length === 0 && (
+                  <Typography
+                     variant="body1"
+                     letterSpacing={-0.5}
+                     fontWeight="bold"
+                     fontStyle="italic"
+                     textAlign="center"
+                     sx={{
+                        background: '#FFFFFF',
+                        borderRadius: 2,
+                        p: 4,
+                        color: '#808080',
+                        border: `2px dashed #808080`,
+                     }}
+                  >
+                     Create your first task to get started
+                  </Typography>
                )}
             </Box>
          </NoSsr>

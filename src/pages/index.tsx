@@ -10,6 +10,7 @@ import { Tasks } from '../components/Tasks';
 import { Timers } from '../components/Timers';
 import { useStore } from '../store';
 import { TagsResults } from './api/tags';
+import { TasksResults } from './api/tasks';
 
 const Index = observer(() => {
    const theme = useTheme();
@@ -24,6 +25,12 @@ const Index = observer(() => {
             .then((res) => res.json())
             .then((data: TagsResults) => {
                tagStore.initializeTags(data.tags);
+            });
+
+         fetch(`/api/tasks?sub=${user.sub}`)
+            .then((res) => res.json())
+            .then((data: TasksResults) => {
+               taskStore.initializeTasks(data.tasks);
             });
       }
    }, [user]);

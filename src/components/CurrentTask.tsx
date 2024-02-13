@@ -5,7 +5,7 @@ import { useStore } from '../store';
 export const CurrentTask = observer(() => {
    const { tagStore, taskStore } = useStore();
 
-   if (!tagStore.initialized) {
+   if (!tagStore.initialized || !taskStore.initialized) {
       return null;
    }
 

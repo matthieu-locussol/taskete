@@ -17,26 +17,7 @@ export class TaskStore {
 
    public currentTask: Task | undefined = undefined;
 
-   public tasks: Task[] = [
-      {
-         id: 1,
-         title: 'Task 1 - This is a very long task name but I believe it could fit',
-         completed: false,
-         tags: [{ id: 1, name: 'french' }],
-      },
-      {
-         id: 2,
-         title: 'Task 2',
-         completed: false,
-         tags: [{ id: 1, name: 'french' }],
-      },
-      {
-         id: 3,
-         title: 'Task 3',
-         completed: false,
-         tags: [{ id: 2, name: 'spanish' }],
-      },
-   ];
+   public tasks: Task[] = [];
 
    public showFireworks = false;
 
@@ -46,10 +27,17 @@ export class TaskStore {
 
    public taskTagsField: Tag[] = [];
 
+   public initialized = false;
+
    constructor(store: Store) {
       makeAutoObservable(this);
 
       this._store = store;
+   }
+
+   initializeTasks(tasks: Task[]) {
+      this.tasks = [...tasks];
+      this.initialized = true;
    }
 
    addTask(task: Task) {
