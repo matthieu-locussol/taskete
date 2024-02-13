@@ -15,6 +15,7 @@ import {
    Stack,
    TextField,
    Typography,
+   chipClasses,
    inputBaseClasses,
    outlinedInputClasses,
    styled,
@@ -121,7 +122,11 @@ export const Tasks = observer(() => {
                         color="primary"
                         variant="filled"
                         sx={{
+                           color: theme.palette.flat[settingsStore.currentColor],
                            borderColor: theme.palette.flat[settingsStore.currentColor],
+                           [`& .${chipClasses.deleteIcon}`]: {
+                              color: theme.palette.flat[settingsStore.currentColor],
+                           },
                         }}
                      />
                   ))}

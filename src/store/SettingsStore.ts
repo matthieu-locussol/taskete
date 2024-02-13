@@ -61,4 +61,8 @@ export class SettingsStore {
    setOpenLogoutDialog(open: boolean) {
       this.openLogoutDialog = open;
    }
+
+   setUserId(userId: UserProfile['sub'] | null) {
+      this.userId = userId;
+   }
 }

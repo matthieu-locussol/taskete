@@ -1,6 +1,8 @@
-import { Container, styled, useTheme } from '@mui/material';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import { Box, Container, styled, useTheme } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import Head from 'next/head';
+import { useEffect } from 'react';
 import Fireworks from 'react-canvas-confetti/dist/presets/fireworks';
 import { CurrentTask } from '../components/CurrentTask';
 import { Layout } from '../components/Layout';
@@ -11,6 +13,13 @@ import { useStore } from '../store';
 const Index = observer(() => {
    const theme = useTheme();
    const { pomodoroStore, settingsStore, taskStore } = useStore();
+   const { user } = useUser();
+
+   useEffect(() => {
+      if (user !== undefined) {
+         settingsStore.setUserId(user.sub);
+      }
+   }, [user]);
 
    return (
       <Layout>
@@ -25,11 +34,19 @@ const Index = observer(() => {
             />
             <title>{pomodoroStore.title}</title>
          </Head>
-         <StyledContainer maxWidth="sm">
-            <Timers />
-            <CurrentTask />
-            <Tasks />
-         </StyledContainer>
+         {settingsStore.userId !== null ? (
+            <StyledContainer maxWidth="sm">
+               <Timers />
+               <CurrentTask />
+               <Tasks />
+            </StyledContainer>
+         ) : (
+            <StyledContainer maxWidth="sm" sx={{ height: '100vh' }}>
+               <Box display="flex" justifyContent="center">
+                  <h1>Log in to continue</h1>
+               </Box>
+            </StyledContainer>
+         )}
          {taskStore.showFireworks && (
             <Fireworks
                autorun={{

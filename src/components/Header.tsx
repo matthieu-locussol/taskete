@@ -11,11 +11,13 @@ import {
    useMediaQuery,
    useTheme,
 } from '@mui/material';
+import { useStore } from '../store';
 import { UserButton } from './UserButton';
 
 export const Header = () => {
    const theme = useTheme();
    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+   const { settingsStore } = useStore();
 
    return (
       <Root>
@@ -26,23 +28,27 @@ export const Header = () => {
             </Typography>
          </Stack>
          <Stack direction="row" alignItems="center" gap={2}>
-            {isMobile ? (
-               <IconButton color="primary">
-                  <StatsIcon />
-               </IconButton>
-            ) : (
-               <Button size="small" startIcon={<StatsIcon />}>
-                  Statistics
-               </Button>
-            )}
-            {isMobile ? (
-               <IconButton color="primary">
-                  <SettingsIcon />
-               </IconButton>
-            ) : (
-               <Button size="small" startIcon={<SettingsIcon />}>
-                  Settings
-               </Button>
+            {settingsStore.userId !== null && (
+               <Box display="flex" gap={2}>
+                  {isMobile ? (
+                     <IconButton color="primary">
+                        <StatsIcon />
+                     </IconButton>
+                  ) : (
+                     <Button size="small" startIcon={<StatsIcon />}>
+                        Statistics
+                     </Button>
+                  )}
+                  {isMobile ? (
+                     <IconButton color="primary">
+                        <SettingsIcon />
+                     </IconButton>
+                  ) : (
+                     <Button size="small" startIcon={<SettingsIcon />}>
+                        Settings
+                     </Button>
+                  )}
+               </Box>
             )}
             <UserButton />
          </Stack>
