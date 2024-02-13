@@ -20,9 +20,10 @@ model Task {
 }
 
 model Tag {
-    id   Int    @id @default(autoincrement())
-    sub  String
-    name String
+    id      Int     @id @default(autoincrement())
+    sub     String
+    name    String
+    deleted Boolean @default(false)
 
     tasks       Task[]
     timeEntries TimeEntry[]
@@ -34,5 +35,6 @@ model TimeEntry {
     seconds Int
     date    DateTime @default(now())
 
-    tags Tag[]
+    taskId Int
+    task   Tag @relation(fields: [taskId], references: [id])
 }

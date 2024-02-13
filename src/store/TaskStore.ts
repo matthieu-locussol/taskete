@@ -75,7 +75,7 @@ export class TaskStore {
       )
          .then((res) => res.json())
          .then((data: CreateTaskResults) => {
-            this.tasks.push(data.task);
+            this.tasks = [data.task, ...this.tasks];
             this.setOpenNewTaskDialog(false);
          })
          .catch((error) => {

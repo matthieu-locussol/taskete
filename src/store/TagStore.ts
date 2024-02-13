@@ -6,6 +6,7 @@ import { Store } from './Store';
 export const zTag = z.object({
    id: z.number(),
    name: z.string(),
+   deleted: z.boolean(),
 });
 
 export type Tag = z.infer<typeof zTag>;
@@ -111,5 +112,9 @@ export class TagStore {
 
    setLoading(loading: boolean) {
       this.loading = loading;
+   }
+
+   get availableTags() {
+      return this.tags.filter((t) => !t.deleted);
    }
 }

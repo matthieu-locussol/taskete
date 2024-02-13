@@ -144,7 +144,7 @@ export const Tasks = observer(() => {
                   </Alert>
                )}
                <Box display="flex" gap={1} mt={1} width="100%" flexWrap="wrap">
-                  {tagStore.tags.map((tag) => (
+                  {tagStore.availableTags.map((tag) => (
                      <Chip
                         key={`${tag.id}-${tag.name}`}
                         label={tag.name}
@@ -272,7 +272,7 @@ export const Tasks = observer(() => {
                   >
                      <em>Select at least one tag</em>
                   </MenuItem>
-                  {tagStore.tags.map((tag) => (
+                  {tagStore.availableTags.map((tag) => (
                      // @ts-expect-error
                      <MenuItem key={`option-${tag.id}-${tag.name}`} value={tag}>
                         {tag.name}

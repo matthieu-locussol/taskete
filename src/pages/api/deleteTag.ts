@@ -24,11 +24,12 @@ export default async function handler(req: NextRequest) {
 
    const idInt = parseInt(id, 10);
 
-   const tag = await prisma.tag.delete({
+   const tag = await prisma.tag.update({
       where: {
          id: idInt,
-         name,
-         sub,
+      },
+      data: {
+         deleted: true,
       },
    });
 
