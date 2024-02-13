@@ -12,7 +12,10 @@ import {
    DialogTitle,
    Divider,
    IconButton,
+   MenuItem,
    NoSsr,
+   OutlinedInput,
+   Select,
    Stack,
    TextField,
    Typography,
@@ -25,6 +28,7 @@ import {
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../store';
 import { Color } from '../store/SettingsStore';
+import { Tag } from '../store/TagStore';
 import { Task } from './Task';
 
 export const Tasks = observer(() => {
@@ -181,7 +185,46 @@ export const Tasks = observer(() => {
                   fullWidth
                   variant="outlined"
                   flatColor={settingsStore.currentColor}
+                  value={taskStore.taskNameField}
+                  onChange={(e) => taskStore.setTaskNameField(e.target.value)}
                />
+               <Select<Tag[]>
+                  multiple
+                  value={taskStore.taskTagsField}
+                  onChange={(e) => taskStore.setTaskTagsField(e.target.value as Tag[])}
+                  input={<OutlinedInput fullWidth size="small" sx={{ mt: 1 }} />}
+                  renderValue={(selected) => (
+                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                        {selected.map((value) => (
+                           <Chip
+                              color="primary"
+                              size="small"
+                              key={`input-${value}-${value.id}`}
+                              label={value.name}
+                           />
+                        ))}
+                     </Box>
+                  )}
+                  MenuProps={{
+                     slotProps: {
+                        paper: {
+                           sx: {
+                              opacity: 0.7,
+                              background: theme.palette.flat[settingsStore.currentColor],
+                              maxHeight: 48 * 4.5 + 8,
+                              width: 250,
+                           },
+                        },
+                     },
+                  }}
+               >
+                  {tagStore.tags.map((tag) => (
+                     // @ts-expect-error
+                     <MenuItem key={`option-${tag.id}-${tag.name}`} value={tag}>
+                        {tag.name}
+                     </MenuItem>
+                  ))}
+               </Select>
             </DialogContent>
             <DialogActions
                sx={{
@@ -195,7 +238,9 @@ export const Tasks = observer(() => {
                >
                   Cancel
                </Button>
-               <Button type="submit">Create</Button>
+               <Button disabled={!taskStore.canAddTask} type="submit">
+                  Create
+               </Button>
             </DialogActions>
          </Dialog>
       </Box>

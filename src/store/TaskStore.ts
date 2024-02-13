@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { z } from 'zod';
 import { Store } from './Store';
-import { zTag } from './TagStore';
+import { Tag, zTag } from './TagStore';
 
 const zTask = z.object({
    id: z.number(),
@@ -41,6 +41,10 @@ export class TaskStore {
    public showFireworks = false;
 
    public openNewTaskDialog = false;
+
+   public taskNameField = '';
+
+   public taskTagsField: Tag[] = [];
 
    constructor(store: Store) {
       makeAutoObservable(this);
@@ -89,5 +93,17 @@ export class TaskStore {
 
    setOpenNewTaskDialog(open: boolean) {
       this.openNewTaskDialog = open;
+   }
+
+   setTaskNameField(value: string) {
+      this.taskNameField = value;
+   }
+
+   setTaskTagsField(value: Tag[]) {
+      this.taskTagsField = value;
+   }
+
+   get canAddTask() {
+      return this.taskNameField.length > 0 && this.taskTagsField.length > 0;
    }
 }
