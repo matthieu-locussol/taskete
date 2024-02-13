@@ -34,7 +34,7 @@ export class PomodoroStore {
    }
 
    get remainingSecondsStr() {
-      const remainingSeconds = this.maxSeconds - this.elapsedSeconds;
+      const remainingSeconds = this.remainingSeconds;
 
       const hours = Math.floor(remainingSeconds / 3600);
       const minutes = Math.floor((remainingSeconds % 3600) / 60);
@@ -68,11 +68,13 @@ export class PomodoroStore {
    }
 
    get remainingSeconds() {
-      return this.maxSeconds - this.elapsedSeconds;
+      return this.state === 'freemode'
+         ? this.elapsedSeconds
+         : this.maxSeconds - this.elapsedSeconds;
    }
 
    get remainingSecondsRatio() {
-      return this.elapsedSeconds / this.maxSeconds;
+      return this.state === 'freemode' ? 0 : this.elapsedSeconds / this.maxSeconds;
    }
 
    get titleSuffix() {
@@ -106,6 +108,11 @@ export class PomodoroStore {
          this.elapsedSeconds += 1;
       }
 
+      if (this.state === 'freemode') {
+         this.startFreeMode();
+         return;
+      }
+
       const intervalId = window.setInterval(() => {
          if (this.elapsedSeconds < this.maxSeconds) {
             runInAction(() => {
@@ -120,6 +127,16 @@ export class PomodoroStore {
                this.setState('working');
             }
          }
+      }, 1000);
+
+      this._intervalId = intervalId;
+   }
+
+   startFreeMode() {
+      const intervalId = window.setInterval(() => {
+         runInAction(() => {
+            this.elapsedSeconds += 1;
+         });
       }, 1000);
 
       this._intervalId = intervalId;
