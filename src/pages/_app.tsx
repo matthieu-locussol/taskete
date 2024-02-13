@@ -44,7 +44,7 @@ const MyApp = observer((props: MyAppProps) => {
             <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png?v=2" />
             <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2" />
             <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2" />
-            <link rel="manifest" crossOrigin="use-credentials" href="/manifest.webmanifest?v=2" />
+            <link rel="manifest" crossOrigin="use-credentials" href="/manifest.json?v=2" />
             <link rel="mask-icon" href="/safari-pinned-tab.svg?v=2" color="#518a58" />
             <link rel="shortcut icon" href="/favicon.ico?v=2" />
             <meta name="msapplication-TileColor" content="#fafafa" />
