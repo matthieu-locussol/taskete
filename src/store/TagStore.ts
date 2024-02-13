@@ -25,6 +25,8 @@ export class TagStore {
 
    public loading = false;
 
+   public initialized = false;
+
    constructor(store: Store) {
       makeAutoObservable(this);
 
@@ -34,6 +36,7 @@ export class TagStore {
    initializeTags(tags: Tag[]) {
       this.tags = [...tags];
       this.oldTags = [...tags];
+      this.initialized = true;
    }
 
    addTag() {

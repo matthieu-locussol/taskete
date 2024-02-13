@@ -6,6 +6,7 @@ import {
    circularProgressClasses,
    styled,
 } from '@mui/material';
+import { observer } from 'mobx-react-lite';
 import { useStore } from '../store';
 import { SecondsType } from '../store/PomodoroStore';
 
@@ -14,8 +15,8 @@ interface TimerProps extends CircularProgressProps {
    label: string;
 }
 
-export const Timer = ({ value, label, ...rest }: TimerProps) => {
-   const { pomodoroStore } = useStore();
+export const Timer = observer(({ value, label, ...rest }: TimerProps) => {
+   const { pomodoroStore, tagStore } = useStore();
 
    return (
       <Box sx={{ position: 'relative', display: 'inline-flex' }}>
@@ -35,7 +36,7 @@ export const Timer = ({ value, label, ...rest }: TimerProps) => {
             color="primary"
             size={256}
             thickness={1.5}
-            variant="determinate"
+            variant={tagStore.initialized ? 'determinate' : 'indeterminate'}
             value={value}
             sx={{
                transition: 'all 0.3s',
@@ -46,23 +47,25 @@ export const Timer = ({ value, label, ...rest }: TimerProps) => {
             }}
             {...rest}
          />
-         <Box
-            sx={{
-               top: 0,
-               left: 0,
-               bottom: 0,
-               right: 0,
-               position: 'absolute',
-               display: 'flex',
-               alignItems: 'center',
-               justifyContent: 'center',
-            }}
-         >
-            <StyledTypography secondsType={pomodoroStore.secondsType}>{label}</StyledTypography>
-         </Box>
+         {tagStore.initialized && (
+            <Box
+               sx={{
+                  top: 0,
+                  left: 0,
+                  bottom: 0,
+                  right: 0,
+                  position: 'absolute',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+               }}
+            >
+               <StyledTypography secondsType={pomodoroStore.secondsType}>{label}</StyledTypography>
+            </Box>
+         )}
       </Box>
    );
-};
+});
 
 interface StyleProps {
    secondsType: SecondsType;

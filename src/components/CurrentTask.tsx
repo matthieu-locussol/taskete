@@ -3,7 +3,11 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../store';
 
 export const CurrentTask = observer(() => {
-   const { taskStore } = useStore();
+   const { tagStore, taskStore } = useStore();
+
+   if (!tagStore.initialized) {
+      return null;
+   }
 
    return taskStore.currentTask ? (
       <Typography variant="h3" align="center" fontWeight="bold" fontStyle="italic" sx={{ my: 2 }}>

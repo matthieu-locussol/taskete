@@ -7,7 +7,7 @@ import { useStore } from '../store';
 import { PomodoroState } from '../store/PomodoroStore';
 
 export const Timers = observer(() => {
-   const { pomodoroStore } = useStore();
+   const { pomodoroStore, tagStore } = useStore();
 
    return (
       <Box display="flex" flexDirection="column" alignItems="center">
@@ -16,9 +16,9 @@ export const Timers = observer(() => {
                value={pomodoroStore.state}
                onChange={(_, newState: PomodoroState) => pomodoroStore.setState(newState)}
             >
-               <Tab label="Working" value="working" />
-               <Tab label="Break" value="break" />
-               <Tab label="Freemode" value="freemode" />
+               <Tab disabled={!tagStore.initialized} label="Working" value="working" />
+               <Tab disabled={!tagStore.initialized} label="Break" value="break" />
+               <Tab disabled={!tagStore.initialized} label="Freemode" value="freemode" />
             </StyledTabs>
             <Box display="flex" justifyContent="center" mt={2} mb={4}>
                <Timer
@@ -29,6 +29,7 @@ export const Timers = observer(() => {
             <Box display="flex" justifyContent="center" mb={1}>
                <NoSsr>
                   <StartButton
+                     disabled={!tagStore.initialized}
                      disableRipple
                      onClick={() =>
                         pomodoroStore.paused ? pomodoroStore.start() : pomodoroStore.pause()

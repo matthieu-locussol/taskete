@@ -30,6 +30,7 @@ import { useStore } from '../store';
 import { Color } from '../store/SettingsStore';
 import { Tag } from '../store/TagStore';
 import { Task } from './Task';
+import { TaskSkeleton } from './TaskSkeleton';
 
 export const Tasks = observer(() => {
    const theme = useTheme();
@@ -59,9 +60,15 @@ export const Tasks = observer(() => {
          <StyledDivider />
          <NoSsr>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-               {taskStore.tasks.map((task) => (
-                  <Task key={task.id} task={task} />
-               ))}
+               {tagStore.initialized ? (
+                  taskStore.tasks.map((task) => <Task key={task.id} task={task} />)
+               ) : (
+                  <>
+                     <TaskSkeleton />
+                     <TaskSkeleton />
+                     <TaskSkeleton />
+                  </>
+               )}
             </Box>
          </NoSsr>
          <Dialog
