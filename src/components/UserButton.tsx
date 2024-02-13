@@ -115,7 +115,7 @@ export const UserButton = observer(() => {
                   sx={{
                      display: 'flex',
                      flexDirection: 'row',
-                     background: '#FAFAFAA1',
+                     background: '#FAFAFADD',
                      borderRadius: 2,
                      justifyContent: 'space-between',
                   }}
@@ -140,7 +140,7 @@ export const UserButton = observer(() => {
                   sx={{
                      display: 'flex',
                      flexDirection: 'row',
-                     background: '#FAFAFAA1',
+                     background: '#FAFAFADD',
                      borderRadius: 2,
                      justifyContent: 'space-between',
                   }}
@@ -165,7 +165,7 @@ export const UserButton = observer(() => {
                   sx={{
                      display: 'flex',
                      flexDirection: 'row',
-                     background: '#FAFAFAA1',
+                     background: '#FAFAFADD',
                      borderRadius: 2,
                      justifyContent: 'space-between',
                   }}
