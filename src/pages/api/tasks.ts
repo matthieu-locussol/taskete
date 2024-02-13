@@ -35,6 +35,7 @@ export default async function handler(req: NextRequest) {
          id: true,
          title: true,
          completed: true,
+         date: true,
          tags: {
             select: {
                id: true,
@@ -44,7 +45,15 @@ export default async function handler(req: NextRequest) {
       },
    });
 
-   return new Response(JSON.stringify({ tasks }), {
-      status: 200,
-   });
+   return new Response(
+      JSON.stringify({
+         tasks: tasks.map((task) => ({
+            ...task,
+            date: task.date.toISOString(),
+         })),
+      }),
+      {
+         status: 200,
+      },
+   );
 }

@@ -61,7 +61,7 @@ export const Tasks = observer(() => {
          <NoSsr>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                {tagStore.initialized && taskStore.initialized ? (
-                  taskStore.tasks.map((task) => <Task key={task.id} task={task} />)
+                  taskStore.orderedTasksByDate.map((task) => <Task key={task.id} task={task} />)
                ) : (
                   <>
                      <TaskSkeleton />

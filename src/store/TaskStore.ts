@@ -9,6 +9,7 @@ const zTask = z.object({
    title: z.string(),
    completed: z.boolean(),
    tags: z.array(zTag),
+   date: z.string(),
 });
 
 export type Task = z.infer<typeof zTask>;
@@ -96,12 +97,25 @@ export class TaskStore {
       const task = this.tasks.find(({ id }) => id === taskId);
 
       if (task) {
+         // Optimistic update
          task.completed = !task.completed;
 
          if (this.currentTask && this.currentTask.id === task.id && task.completed) {
             this._store.pomodoroStore.setElapsedSeconds(0);
             this._store.pomodoroStore.pause();
          }
+
+         fetch(
+            `/api/completeTask?sub=${this._store.settingsStore.userId}&id=${task.id}&completed=${task.completed}`,
+         )
+            .then((res) => res.json())
+            .then((data: { task: Task }) => {
+               const index = this.tasks.findIndex(({ id }) => id === data.task.id);
+               this.tasks[index] = data.task;
+            })
+            .catch((error) => {
+               console.error('An error occurred while updating the task.', error);
+            });
       }
 
       if (!this.tasks.some((task) => !task.completed)) {
@@ -145,5 +159,15 @@ export class TaskStore {
 
    get isErrored() {
       return this.errorMessage.length > 0;
+   }
+
+   get orderedTasksByDate() {
+      return [...this.tasks].sort((a, b) => {
+         return (
+            new Date().getTime() -
+            new Date(a.date).getTime() -
+            (new Date().getTime() - new Date(b.date).getTime())
+         );
+      });
    }
 }

@@ -1,4 +1,4 @@
-import { Tag } from '@prisma/client/edge';
+import { Tag, Task } from '@prisma/client/edge';
 import { NextRequest } from 'next/server';
 import { prisma } from '../../utils/prisma';
 
@@ -6,11 +6,8 @@ export const config = {
    runtime: 'edge',
 };
 
-export interface CreateTaskResults {
-   task: {
-      id: number;
-      title: string;
-      completed: boolean;
+export interface UpdateTaskResults {
+   task: Omit<Task, 'date'> & {
       date: string;
       tags: Tag[];
    };
@@ -19,24 +16,22 @@ export interface CreateTaskResults {
 export default async function handler(req: NextRequest) {
    const { searchParams } = new URL(req.url);
    const sub = searchParams.get('sub');
-   const name = searchParams.get('name');
-   const tags = searchParams.get('tags');
+   const id = searchParams.get('id');
+   const completed = searchParams.get('completed');
 
-   if (name === null || sub === null || tags === null) {
-      return new Response(JSON.stringify({ error: 'name, sub and tags are required' }), {
+   if (id === null || sub === null || completed === null) {
+      return new Response(JSON.stringify({ error: 'id, sub and completed are required' }), {
          status: 400,
       });
    }
 
-   const tagsArray: Tag[] = tags.split('#;#').map((json) => JSON.parse(json));
-
-   const task = await prisma.task.create({
+   const task = await prisma.task.update({
       data: {
-         title: name,
+         completed: completed === 'true',
+      },
+      where: {
+         id: parseInt(id, 10),
          sub,
-         tags: {
-            connect: tagsArray.map(({ id }) => ({ id })),
-         },
       },
       select: {
          id: true,
