@@ -47,9 +47,9 @@ export const Tasks = observer(() => {
             <IconButton
                size="small"
                color="primary"
-               onClick={() => taskStore.toggleAreCompletedTasksVisible()}
+               onClick={() => settingsStore.toggleAreCompletedTasksVisible()}
             >
-               {taskStore.areCompletedTasksVisible ? <VisibleOn /> : <VisibleOff />}
+               {settingsStore.areCompletedTasksVisible ? <VisibleOn /> : <VisibleOff />}
             </IconButton>
             <IconButton
                size="small"
@@ -100,7 +100,7 @@ export const Tasks = observer(() => {
                   taskStore.initialized &&
                   taskStore.tasks.length === taskStore.completedTasksCount &&
                   taskStore.completedTasksCount > 0 &&
-                  !taskStore.areCompletedTasksVisible && (
+                  !settingsStore.areCompletedTasksVisible && (
                      <Typography
                         variant="body1"
                         letterSpacing={-0.5}

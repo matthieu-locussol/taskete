@@ -10,6 +10,17 @@ const zColor = constructZodLiteralUnionType(colors.map((color) => z.literal(colo
 
 export type Color = z.infer<typeof zColor>;
 
+const zSettingsState = z.object({
+   workingColor: zColor,
+   breakColor: zColor,
+   freemodeColor: zColor,
+   workingSeconds: z.number(),
+   breakSeconds: z.number(),
+   areCompletedTasksVisible: z.boolean(),
+});
+
+export type SettingsState = z.infer<typeof zSettingsState>;
+
 export class SettingsStore {
    private _store: Store;
 
@@ -30,6 +41,8 @@ export class SettingsStore {
    public openSettingsDialog = false;
 
    public openStatisticsDialog = false;
+
+   public areCompletedTasksVisible = true;
 
    constructor(store: Store) {
       makeAutoObservable(this);
@@ -68,6 +81,10 @@ export class SettingsStore {
    setOpenSettingsDialog(open: boolean) {
       this.openSettingsDialog = open;
       this._store.pomodoroStore.pause();
+
+      if (!open) {
+         this.saveSettings();
+      }
    }
 
    setBreakColor(breakColor: Color) {
@@ -81,5 +98,62 @@ export class SettingsStore {
    setOpenStatisticsDialog(open: boolean) {
       this.openStatisticsDialog = open;
       this._store.pomodoroStore.pause();
+   }
+
+   private saveSettings() {
+      const state: SettingsState = {
+         workingColor: this.workingColor,
+         breakColor: this.breakColor,
+         freemodeColor: this.freemodeColor,
+         workingSeconds: this.workingSeconds,
+         breakSeconds: this.breakSeconds,
+         areCompletedTasksVisible: this.areCompletedTasksVisible,
+      };
+
+      localStorage.setItem('settings', JSON.stringify(state));
+   }
+
+   loadSettings() {
+      const settings = localStorage.getItem('settings');
+
+      try {
+         const settingsState = settings
+            ? zSettingsState.parse(JSON.parse(settings))
+            : this.getInitialSettings();
+
+         if (settingsState !== null) {
+            this.workingColor = settingsState.workingColor;
+            this.breakColor = settingsState.breakColor;
+            this.freemodeColor = settingsState.freemodeColor;
+            this.workingSeconds = settingsState.workingSeconds;
+            this.breakSeconds = settingsState.breakSeconds;
+            this.areCompletedTasksVisible = settingsState.areCompletedTasksVisible;
+         }
+      } catch (error) {
+         const settingsState = this.getInitialSettings();
+
+         this.workingColor = settingsState.workingColor;
+         this.breakColor = settingsState.breakColor;
+         this.freemodeColor = settingsState.freemodeColor;
+         this.workingSeconds = settingsState.workingSeconds;
+         this.breakSeconds = settingsState.breakSeconds;
+         this.areCompletedTasksVisible = settingsState.areCompletedTasksVisible;
+      }
+   }
+
+   private getInitialSettings(): SettingsState {
+      return {
+         workingColor: 'green',
+         breakColor: 'red',
+         freemodeColor: 'blue',
+         workingSeconds: 25 * 60,
+         breakSeconds: 5 * 60,
+         areCompletedTasksVisible: true,
+      };
+   }
+
+   toggleAreCompletedTasksVisible() {
+      this.areCompletedTasksVisible = !this.areCompletedTasksVisible;
+      this._store.settingsStore.saveSettings();
    }
 }

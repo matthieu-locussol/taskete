@@ -37,8 +37,6 @@ export class TaskStore {
 
    public dirty = false;
 
-   public areCompletedTasksVisible = true;
-
    constructor(store: Store) {
       makeAutoObservable(this);
 
@@ -198,11 +196,9 @@ export class TaskStore {
          .sort((a, b) => {
             return a.id === this.currentTask?.id ? -1 : b.id === this.currentTask?.id ? 1 : 0;
          })
-         .filter((task) => (this.areCompletedTasksVisible ? true : !task.completed));
-   }
-
-   toggleAreCompletedTasksVisible() {
-      this.areCompletedTasksVisible = !this.areCompletedTasksVisible;
+         .filter((task) =>
+            this._store.settingsStore.areCompletedTasksVisible ? true : !task.completed,
+         );
    }
 
    get completedTasksCount() {

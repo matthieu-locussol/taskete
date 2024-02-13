@@ -18,6 +18,10 @@ const Index = observer(() => {
    const { user } = useUser();
 
    useEffect(() => {
+      if (typeof localStorage !== 'undefined') {
+         settingsStore.loadSettings();
+      }
+
       if (typeof window !== 'undefined') {
          const endAudio = new Audio('/audio/alarm.mp3');
          endAudio.volume = 0.5;
