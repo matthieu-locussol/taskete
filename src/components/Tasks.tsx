@@ -190,21 +190,36 @@ export const Tasks = observer(() => {
                />
                <Select<Tag[]>
                   multiple
+                  displayEmpty
                   value={taskStore.taskTagsField}
                   onChange={(e) => taskStore.setTaskTagsField(e.target.value as Tag[])}
-                  input={<OutlinedInput fullWidth size="small" sx={{ mt: 1 }} />}
-                  renderValue={(selected) => (
-                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                        {selected.map((value) => (
-                           <Chip
-                              color="primary"
-                              size="small"
-                              key={`input-${value}-${value.id}`}
-                              label={value.name}
-                           />
-                        ))}
-                     </Box>
-                  )}
+                  input={
+                     <OutlinedInput
+                        fullWidth
+                        size="small"
+                        sx={{
+                           mt: 1,
+                        }}
+                     />
+                  }
+                  renderValue={(selected) => {
+                     if (selected.length === 0) {
+                        return <Typography>Tags</Typography>;
+                     }
+
+                     return (
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                           {selected.map((value) => (
+                              <Chip
+                                 color="primary"
+                                 size="small"
+                                 key={`input-${value}-${value.id}`}
+                                 label={value.name}
+                              />
+                           ))}
+                        </Box>
+                     );
+                  }}
                   MenuProps={{
                      slotProps: {
                         paper: {
@@ -218,6 +233,15 @@ export const Tasks = observer(() => {
                      },
                   }}
                >
+                  <MenuItem
+                     disabled
+                     value=""
+                     sx={{
+                        fontWeight: 'bold',
+                     }}
+                  >
+                     <em>Select at least one tag</em>
+                  </MenuItem>
                   {tagStore.tags.map((tag) => (
                      // @ts-expect-error
                      <MenuItem key={`option-${tag.id}-${tag.name}`} value={tag}>
