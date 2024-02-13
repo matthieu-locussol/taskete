@@ -9,15 +9,22 @@ import { Layout } from '../components/Layout';
 import { Tasks } from '../components/Tasks';
 import { Timers } from '../components/Timers';
 import { useStore } from '../store';
+import { TagsResults } from './api/tags';
 
 const Index = observer(() => {
    const theme = useTheme();
-   const { pomodoroStore, settingsStore, taskStore } = useStore();
+   const { pomodoroStore, settingsStore, tagStore, taskStore } = useStore();
    const { user } = useUser();
 
    useEffect(() => {
       if (user !== undefined) {
          settingsStore.setUserId(user.sub);
+
+         fetch(`/api/tags?sub=${user.sub}`)
+            .then((res) => res.json())
+            .then((data: TagsResults) => {
+               tagStore.initializeTags(data.tags);
+            });
       }
    }, [user]);
 

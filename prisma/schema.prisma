@@ -11,25 +11,28 @@ datasource db {
 
 model Task {
     id        Int      @id @default(autoincrement())
+    sub       String
     title     String
     completed Boolean  @default(false)
-    seconds   Int?
     date      DateTime @default(now())
-    cron      String?
 
     tags Tag[]
 }
 
 model Tag {
-    id     Int    @id @default(autoincrement())
-    name   String
-    userId Int
+    id   Int    @id @default(autoincrement())
+    sub  String
+    name String
 
     tasks       Task[]
     timeEntries TimeEntry[]
 }
 
 model TimeEntry {
-    id   Int   @id @default(autoincrement())
+    id      Int      @id @default(autoincrement())
+    sub     String
+    seconds Int
+    date    DateTime @default(now())
+
     tags Tag[]
 }

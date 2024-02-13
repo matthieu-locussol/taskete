@@ -21,13 +21,11 @@ export class TagStore {
 
    constructor() {
       makeAutoObservable(this);
-
-      this.initializeTags();
    }
 
-   initializeTags() {
-      this.tags = []; // Get initial tags from Database
-      this.oldTags = [...this.tags];
+   initializeTags(tags: Tag[]) {
+      this.tags = [...tags];
+      this.oldTags = [...tags];
    }
 
    addTag() {
