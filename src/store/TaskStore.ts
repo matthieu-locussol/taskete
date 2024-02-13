@@ -99,14 +99,16 @@ export class TaskStore {
       if (task) {
          // Optimistic update
          task.completed = !task.completed;
+         let secondsSpent = 0;
 
          if (this.currentTask && this.currentTask.id === task.id && task.completed) {
+            secondsSpent = this._store.pomodoroStore.elapsedSeconds;
             this._store.pomodoroStore.setElapsedSeconds(0);
             this._store.pomodoroStore.pause();
          }
 
          fetch(
-            `/api/completeTask?sub=${this._store.settingsStore.userId}&id=${task.id}&completed=${task.completed}`,
+            `/api/completeTask?sub=${this._store.settingsStore.userId}&id=${task.id}&completed=${task.completed}&seconds=${secondsSpent}`,
          )
             .then((res) => res.json())
             .then((data: { task: Task }) => {
@@ -162,12 +164,16 @@ export class TaskStore {
    }
 
    get orderedTasksByDate() {
-      return [...this.tasks].sort((a, b) => {
-         return (
-            new Date().getTime() -
-            new Date(a.date).getTime() -
-            (new Date().getTime() - new Date(b.date).getTime())
-         );
-      });
+      return [...this.tasks]
+         .sort((a, b) => {
+            return (
+               new Date().getTime() -
+               new Date(a.date).getTime() -
+               (new Date().getTime() - new Date(b.date).getTime())
+            );
+         })
+         .sort((a, b) => {
+            return a.id === this.currentTask?.id ? -1 : b.id === this.currentTask?.id ? 1 : 0;
+         });
    }
 }
