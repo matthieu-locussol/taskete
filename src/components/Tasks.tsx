@@ -1,5 +1,7 @@
 import PlusIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import TagsIcon from '@mui/icons-material/MoreRounded';
+import VisibleOff from '@mui/icons-material/VisibilityOffRounded';
+import VisibleOn from '@mui/icons-material/VisibilityRounded';
 import {
    Alert,
    Box,
@@ -39,9 +41,16 @@ export const Tasks = observer(() => {
    return (
       <Box>
          <Stack direction="row" justifyContent="space-between" alignItems="center" gap={1}>
-            <Typography variant="h2" fontWeight="bold" sx={{ mr: 'auto' }}>
-               Tasks
+            <Typography variant="h2" sx={{ mr: 'auto' }}>
+               <b>Tasks</b> ({taskStore.completedTasksCount}/{taskStore.tasks.length})
             </Typography>
+            <IconButton
+               size="small"
+               color="primary"
+               onClick={() => taskStore.toggleAreCompletedTasksVisible()}
+            >
+               {taskStore.areCompletedTasksVisible ? <VisibleOn /> : <VisibleOff />}
+            </IconButton>
             <IconButton
                size="small"
                color="primary"
@@ -87,6 +96,28 @@ export const Tasks = observer(() => {
                      Create your first task to get started
                   </Typography>
                )}
+               {tagStore.initialized &&
+                  taskStore.initialized &&
+                  taskStore.tasks.length === taskStore.completedTasksCount &&
+                  taskStore.completedTasksCount > 0 &&
+                  !taskStore.areCompletedTasksVisible && (
+                     <Typography
+                        variant="body1"
+                        letterSpacing={-0.5}
+                        fontWeight="bold"
+                        fontStyle="italic"
+                        textAlign="center"
+                        sx={{
+                           background: '#FFFFFF',
+                           borderRadius: 2,
+                           p: 4,
+                           color: '#808080',
+                           border: `2px dashed #808080`,
+                        }}
+                     >
+                        Congratulations! All tasks are completed! 🎉
+                     </Typography>
+                  )}
             </Box>
          </NoSsr>
          <Dialog

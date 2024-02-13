@@ -35,6 +35,10 @@ export class TaskStore {
 
    public errorMessage = '';
 
+   public dirty = false;
+
+   public areCompletedTasksVisible = true;
+
    constructor(store: Store) {
       makeAutoObservable(this);
 
@@ -129,6 +133,8 @@ export class TaskStore {
             });
          }, 2000);
       }
+
+      this.dirty = true;
    }
 
    setCurrentTask(task: Task) {
@@ -164,6 +170,10 @@ export class TaskStore {
    }
 
    get orderedTasksByDate() {
+      if (this.dirty) {
+         this.dirty = false;
+      }
+
       return [...this.tasks]
          .sort((a, b) => {
             return (
@@ -173,7 +183,19 @@ export class TaskStore {
             );
          })
          .sort((a, b) => {
+            return a.completed === b.completed ? 0 : a.completed ? 1 : -1;
+         })
+         .sort((a, b) => {
             return a.id === this.currentTask?.id ? -1 : b.id === this.currentTask?.id ? 1 : 0;
-         });
+         })
+         .filter((task) => (this.areCompletedTasksVisible ? true : !task.completed));
+   }
+
+   toggleAreCompletedTasksVisible() {
+      this.areCompletedTasksVisible = !this.areCompletedTasksVisible;
+   }
+
+   get completedTasksCount() {
+      return this.tasks.filter((task) => task.completed).length;
    }
 }
