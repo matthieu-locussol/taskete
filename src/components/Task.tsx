@@ -53,8 +53,9 @@ export const Task = observer(({ task }: TaskProps) => {
          <Tags>
             {task.tags.map((tag) => (
                <Chip
+                  key={`${task.id}-${tag.id}`}
                   size="small"
-                  label={tag}
+                  label={tag.name}
                   sx={({ palette }) => ({
                      backgroundColor: task.completed
                         ? palette.flat[settingsStore.currentColor]

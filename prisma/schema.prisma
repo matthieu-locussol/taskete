@@ -15,4 +15,21 @@ model Task {
     completed Boolean  @default(false)
     seconds   Int?
     date      DateTime @default(now())
+    cron      String?
+
+    tags Tag[]
+}
+
+model Tag {
+    id     Int    @id @default(autoincrement())
+    name   String
+    userId Int
+
+    tasks       Task[]
+    timeEntries TimeEntry[]
+}
+
+model TimeEntry {
+    id   Int   @id @default(autoincrement())
+    tags Tag[]
 }

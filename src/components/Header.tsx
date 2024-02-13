@@ -1,4 +1,3 @@
-import LogInIcon from '@mui/icons-material/AccountCircleRounded';
 import StatsIcon from '@mui/icons-material/BarChartRounded';
 import TaskIcon from '@mui/icons-material/CheckCircleRounded';
 import SettingsIcon from '@mui/icons-material/SettingsRounded';
@@ -12,6 +11,7 @@ import {
    useMediaQuery,
    useTheme,
 } from '@mui/material';
+import { UserButton } from './UserButton';
 
 export const Header = () => {
    const theme = useTheme();
@@ -25,7 +25,7 @@ export const Header = () => {
                Taskete
             </Typography>
          </Stack>
-         <Stack direction="row" gap={2}>
+         <Stack direction="row" alignItems="center" gap={2}>
             {isMobile ? (
                <IconButton color="primary">
                   <StatsIcon />
@@ -44,9 +44,7 @@ export const Header = () => {
                   Settings
                </Button>
             )}
-            <IconButton color="primary">
-               <LogInIcon fontSize="small" />
-            </IconButton>
+            <UserButton />
          </Stack>
       </Root>
    );

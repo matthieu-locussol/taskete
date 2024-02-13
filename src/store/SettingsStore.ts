@@ -1,3 +1,4 @@
+import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { makeAutoObservable } from 'mobx';
 import { z } from 'zod';
 import { Store } from './Store';
@@ -27,6 +28,10 @@ export class SettingsStore {
 
    public breakSeconds: number = 5 * 60;
 
+   public openLogoutDialog = false;
+
+   public userId: UserProfile['sub'] | null = null;
+
    constructor(store: Store) {
       makeAutoObservable(this);
 
@@ -51,5 +56,9 @@ export class SettingsStore {
          break: this.breakColor,
          freemode: this.freemodeColor,
       }[this._store.pomodoroStore.state];
+   }
+
+   setOpenLogoutDialog(open: boolean) {
+      this.openLogoutDialog = open;
    }
 }
