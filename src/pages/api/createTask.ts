@@ -27,7 +27,6 @@ export default async function handler(req: NextRequest) {
       });
    }
 
-   console.log(tags);
    const tagsArray: Tag[] = tags.split('#;#').map((json) => JSON.parse(json));
 
    const task = await prisma.task.create({
