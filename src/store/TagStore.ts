@@ -1,5 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import { z } from 'zod';
+import { CreateTagResults } from '../pages/api/createTag';
+import { Store } from './Store';
 
 export const zTag = z.object({
    id: z.number(),
@@ -9,6 +11,8 @@ export const zTag = z.object({
 export type Tag = z.infer<typeof zTag>;
 
 export class TagStore {
+   private _store: Store;
+
    public oldTags: Tag[] = [];
 
    public tags: Tag[] = [];
@@ -19,8 +23,12 @@ export class TagStore {
 
    public errorMessage = '';
 
-   constructor() {
+   public loading = false;
+
+   constructor(store: Store) {
       makeAutoObservable(this);
+
+      this._store = store;
    }
 
    initializeTags(tags: Tag[]) {
@@ -29,72 +37,56 @@ export class TagStore {
    }
 
    addTag() {
+      this.setLoading(true);
+
       if (this.tagNameField.trim().length === 0) {
          this.errorMessage = 'Tag name cannot be empty!';
+         this.setLoading(false);
          return;
       }
 
       if (this.tags.some((t) => t.name === this.tagNameField)) {
          this.errorMessage = `Tag "${this.tagNameField}" already exists!`;
+         this.setLoading(false);
          return;
       }
 
       this.errorMessage = '';
 
-      this.tags.push({
-         id: -1,
-         name: this.tagNameField,
-      });
-
-      this.tagNameField = '';
+      fetch(`/api/createTag?sub=${this._store.settingsStore.userId}&name=${this.tagNameField}`)
+         .then((res) => res.json())
+         .then((data: CreateTagResults) => {
+            this.tags.push(data.tag);
+         })
+         .catch((error) => {
+            this.errorMessage = error?.message || 'An error occurred while creating the tag.';
+         })
+         .finally(() => {
+            this.tagNameField = '';
+            this.setLoading(false);
+         });
    }
 
    removeTag({ id, name }: Tag) {
-      if (id !== -1) {
-         this.tags = this.tags.filter((tag) => tag.id !== id);
-      } else {
-         this.tags = this.tags.filter((tag) => tag.name !== name);
-      }
-   }
+      // Optimistic update
+      this.tags = this.tags.filter((tag) => tag.id !== id);
 
-   editTag(tagId: number, newName: string) {
-      const tag = this.tags.find((t) => t.id === tagId);
-
-      if (tag) {
-         tag.name = newName;
-      }
-   }
-
-   saveTags() {
-      // Save tags to Database
-      this.oldTags = [...this.tags];
+      fetch(`/api/deleteTag?id=${id}&sub=${this._store.settingsStore.userId}&name=${name}`)
+         .then((res) => res.json())
+         .then((_data: CreateTagResults) => {
+            // Do nothing
+         })
+         .catch((error) => {
+            this.reset();
+            this.errorMessage = error?.message || 'An error occurred while deleting the tag.';
+         })
+         .finally(() => {
+            this.tagNameField = '';
+         });
    }
 
    setTagNameField(value: string) {
       this.tagNameField = value;
-   }
-
-   get tagsToCreate() {
-      return this.tags.filter((t) => t.id === -1);
-   }
-
-   get tagsToDelete() {
-      return this.oldTags.filter((t) => !this.tags.includes(t));
-   }
-
-   get tagsToUpdate() {
-      return this.tags.filter((t) => {
-         const oldTag = this.oldTags.find((ot) => ot.id === t.id);
-         return oldTag && oldTag.name !== t.name;
-      });
-   }
-
-   get hasChanges() {
-      return (
-         this.tagsToCreate.length > 0 ||
-         this.tagsToDelete.length > 0 ||
-         this.tagsToUpdate.length > 0
-      );
    }
 
    get canAddTag() {
@@ -112,5 +104,9 @@ export class TagStore {
 
    get isErrored() {
       return this.errorMessage.length > 0;
+   }
+
+   setLoading(loading: boolean) {
+      this.loading = loading;
    }
 }

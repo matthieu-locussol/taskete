@@ -18,7 +18,7 @@ export class Store {
 
       this.pomodoroStore = new PomodoroStore(this);
       this.settingsStore = new SettingsStore(this);
-      this.tagStore = new TagStore();
+      this.tagStore = new TagStore(this);
       this.taskStore = new TaskStore(this);
    }
 }

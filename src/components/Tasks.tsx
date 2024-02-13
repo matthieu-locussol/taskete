@@ -5,6 +5,7 @@ import {
    Box,
    Button,
    Chip,
+   CircularProgress,
    Dialog,
    DialogActions,
    DialogContent,
@@ -105,7 +106,7 @@ export const Tasks = observer(() => {
                      onChange={(e) => tagStore.setTagNameField(e.target.value)}
                   />
                   <Button disabled={!tagStore.canAddTag} type="submit" sx={{ m: 'auto' }}>
-                     Add
+                     {tagStore.loading ? <CircularProgress size={24} /> : 'Add'}
                   </Button>
                </Stack>
                {tagStore.isErrored && (
@@ -141,20 +142,9 @@ export const Tasks = observer(() => {
                <Button
                   onClick={() => {
                      tagStore.setOpenTagsDialog(false);
-                     tagStore.reset();
-                  }}
-                  sx={{ backgroundColor: 'transparent' }}
-               >
-                  Cancel
-               </Button>
-               <Button
-                  disabled={!tagStore.hasChanges}
-                  onClick={() => {
-                     tagStore.setOpenTagsDialog(false);
-                     tagStore.saveTags();
                   }}
                >
-                  Save
+                  Close
                </Button>
             </DialogActions>
          </Dialog>
