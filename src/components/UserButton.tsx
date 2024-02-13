@@ -192,13 +192,7 @@ export const UserButton = observer(() => {
                   background: `${theme.palette.flat[settingsStore.currentColor]}DD`,
                }}
             >
-               <Button
-                  onClick={() => settingsStore.setOpenSettingsDialog(false)}
-                  sx={{ backgroundColor: 'transparent' }}
-               >
-                  Cancel
-               </Button>
-               <Button onClick={() => settingsStore.setOpenSettingsDialog(false)}>Save</Button>
+               <Button onClick={() => settingsStore.setOpenSettingsDialog(false)}>Close</Button>
             </DialogActions>
          </Dialog>
       </Root>
