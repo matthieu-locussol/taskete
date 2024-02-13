@@ -1,17 +1,12 @@
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { makeAutoObservable } from 'mobx';
 import { z } from 'zod';
+import { constructZodLiteralUnionType } from '../utils/zod';
 import { Store } from './Store';
 
-const zColor = z.union([
-   z.literal('red'),
-   z.literal('cyan'),
-   z.literal('blue'),
-   z.literal('yellow'),
-   z.literal('purple'),
-   z.literal('green'),
-   z.literal('gray'),
-]);
+export const colors = ['red', 'cyan', 'blue', 'yellow', 'purple', 'green', 'gray'] as const;
+
+const zColor = constructZodLiteralUnionType(colors.map((color) => z.literal(color)));
 
 export type Color = z.infer<typeof zColor>;
 
@@ -31,6 +26,8 @@ export class SettingsStore {
    public openLogoutDialog = false;
 
    public userId: UserProfile['sub'] | null = null;
+
+   public openSettingsDialog = false;
 
    constructor(store: Store) {
       makeAutoObservable(this);
@@ -64,5 +61,17 @@ export class SettingsStore {
 
    setUserId(userId: UserProfile['sub'] | null) {
       this.userId = userId;
+   }
+
+   setOpenSettingsDialog(open: boolean) {
+      this.openSettingsDialog = open;
+   }
+
+   setBreakColor(breakColor: Color) {
+      this.breakColor = breakColor;
+   }
+
+   setFreemodeColor(freemodeColor: Color) {
+      this.freemodeColor = freemodeColor;
    }
 }

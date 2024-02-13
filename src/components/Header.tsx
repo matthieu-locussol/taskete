@@ -40,11 +40,18 @@ export const Header = () => {
                      </Button>
                   )}
                   {isMobile ? (
-                     <IconButton color="primary">
+                     <IconButton
+                        color="primary"
+                        onClick={() => settingsStore.setOpenSettingsDialog(true)}
+                     >
                         <SettingsIcon />
                      </IconButton>
                   ) : (
-                     <Button size="small" startIcon={<SettingsIcon />}>
+                     <Button
+                        size="small"
+                        startIcon={<SettingsIcon />}
+                        onClick={() => settingsStore.setOpenSettingsDialog(true)}
+                     >
                         Settings
                      </Button>
                   )}

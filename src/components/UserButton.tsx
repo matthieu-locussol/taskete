@@ -10,10 +10,14 @@ import {
    DialogContent,
    DialogTitle,
    IconButton,
+   Radio,
+   RadioGroup,
+   Typography,
    styled,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../store';
+import { colors } from '../store/SettingsStore';
 import { theme } from '../styles/theme';
 
 export const UserButton = observer(() => {
@@ -83,6 +87,118 @@ export const UserButton = observer(() => {
                   Cancel
                </Button>
                <Button href="/api/auth/logout">Log Out</Button>
+            </DialogActions>
+         </Dialog>
+         <Dialog
+            maxWidth="xs"
+            fullWidth
+            open={settingsStore.openSettingsDialog}
+            onClose={() => settingsStore.setOpenSettingsDialog(false)}
+         >
+            <DialogTitle
+               fontWeight="bold"
+               sx={{
+                  opacity: 0.9,
+                  background: `${theme.palette.flat[settingsStore.currentColor]}DD`,
+               }}
+            >
+               Settings
+            </DialogTitle>
+            <DialogContent
+               sx={{
+                  opacity: 0.9,
+                  background: `${theme.palette.flat[settingsStore.currentColor]}DD`,
+               }}
+            >
+               <Typography>Working color</Typography>
+               <RadioGroup
+                  sx={{
+                     display: 'flex',
+                     flexDirection: 'row',
+                     background: '#FAFAFAA1',
+                     borderRadius: 2,
+                     justifyContent: 'space-between',
+                  }}
+               >
+                  {colors.map((color) => (
+                     <Radio
+                        key={`working-color-${color}`}
+                        value={color}
+                        checked={settingsStore.workingColor === color}
+                        onChange={() => settingsStore.setWorkingColor(color)}
+                        sx={{
+                           color: theme.palette.flat[color],
+                           ['&.Mui-checked']: {
+                              color: theme.palette.flat[color],
+                           },
+                        }}
+                     />
+                  ))}
+               </RadioGroup>
+               <Typography sx={{ mt: 1 }}>Break color</Typography>
+               <RadioGroup
+                  sx={{
+                     display: 'flex',
+                     flexDirection: 'row',
+                     background: '#FAFAFAA1',
+                     borderRadius: 2,
+                     justifyContent: 'space-between',
+                  }}
+               >
+                  {colors.map((color) => (
+                     <Radio
+                        key={`break-color-${color}`}
+                        value={color}
+                        checked={settingsStore.breakColor === color}
+                        onChange={() => settingsStore.setBreakColor(color)}
+                        sx={{
+                           color: theme.palette.flat[color],
+                           ['&.Mui-checked']: {
+                              color: theme.palette.flat[color],
+                           },
+                        }}
+                     />
+                  ))}
+               </RadioGroup>
+               <Typography sx={{ mt: 1 }}>Freemode color</Typography>
+               <RadioGroup
+                  sx={{
+                     display: 'flex',
+                     flexDirection: 'row',
+                     background: '#FAFAFAA1',
+                     borderRadius: 2,
+                     justifyContent: 'space-between',
+                  }}
+               >
+                  {colors.map((color) => (
+                     <Radio
+                        key={`freemode-color-${color}`}
+                        value={color}
+                        checked={settingsStore.freemodeColor === color}
+                        onChange={() => settingsStore.setFreemodeColor(color)}
+                        sx={{
+                           color: theme.palette.flat[color],
+                           ['&.Mui-checked']: {
+                              color: theme.palette.flat[color],
+                           },
+                        }}
+                     />
+                  ))}
+               </RadioGroup>
+            </DialogContent>
+            <DialogActions
+               sx={{
+                  opacity: 0.9,
+                  background: `${theme.palette.flat[settingsStore.currentColor]}DD`,
+               }}
+            >
+               <Button
+                  onClick={() => settingsStore.setOpenSettingsDialog(false)}
+                  sx={{ backgroundColor: 'transparent' }}
+               >
+                  Cancel
+               </Button>
+               <Button onClick={() => settingsStore.setOpenSettingsDialog(false)}>Save</Button>
             </DialogActions>
          </Dialog>
       </Root>
